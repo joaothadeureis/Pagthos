@@ -5,29 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Integre Pagthos ao eGestor | Crediário profissional com cobrança automática</title>
     <meta name="description" content="Integre o Pagthos ao eGestor e tenha um crediário profissional: cobrança automática, consulta SPC/Serasa, boletos e carnês, relatórios e controle completo de inadimplência." />
-    <style>
-      /* Layout mínimo para colocar o formulário na primeira dobra (lado direito) */
-      .hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: start; }
-      .hero-content { display: grid; gap: 16px; }
-      .hero-form { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; }
-      .lead-form .row { display: grid; gap: 6px; margin-bottom: 12px; }
-      .lead-form label { font-size: 0.95rem; }
-      .lead-form input, .lead-form textarea { padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; }
-      .lead-form button { padding: 10px 14px; border: 0; border-radius: 6px; cursor: pointer; }
-      .lead-form .primary { background: #111827; color: #fff; }
-      .lead-form .secondary { background: #f3f4f6; color: #111827; }
-      fieldset { border: 0; margin: 0; padding: 0; }
-      [hidden] { display: none !important; }
-      .stepper { font-size: 0.9rem; color: #6b7280; margin-bottom: 8px; }
-      figure { margin: 0; }
-      img { max-width: 100%; height: auto; }
-      /* Ícones */
-      .icon { width: 1.1em; height: 1.1em; vertical-align: -0.15em; margin-right: 8px; color: #111827; }
-      .with-icons { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
-      .with-icons li { display: flex; align-items: flex-start; }
-      .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-      @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } }
-    </style>
+    <!-- Removed old inline style block to avoid conflicts with theme overrides -->
     <!-- Sprite de ícones inline -->
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none" aria-hidden="true">
       <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -82,10 +60,15 @@
         --color-primary:#1A1A1A; --color-secondary:#004AAD; --color-accent:#0098DA;
         --bg-base:#FCFCFC; --bg-white:#FFFFFF; --bg-soft:#F6F6F6; --bg-softer:#F8F8F8;
         --border:#E5E5E5; --border-soft:#EDEDED; --yes:#00B87B; --no:#E74C3C; --warn:#F59E0B; --wrap:1200px;
+        --shadow-sm:0 2px 10px rgba(0,0,0,.05);
+        --shadow-md:0 6px 16px rgba(0,0,0,.06);
+        --shadow-lg:0 8px 24px rgba(0,0,0,.06);
+        --radius-sm:10px; --radius-md:12px; --radius-lg:16px;
       }
       #teste-gratuito-sec, footer form { display:none !important; }
-      body{ font-family:'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", sans-serif; color:var(--color-primary); background:var(--bg-base); }
-      section{ max-width:var(--wrap); margin:0 auto; padding:96px 24px; }
+      html{ scroll-behavior:smooth; }
+      body{ font-family:'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", sans-serif; color:var(--color-primary); background:var(--bg-base); line-height:1.6; }
+      section{ max-width:var(--wrap); margin:0 auto; padding:100px 24px; }
       h1{ font-weight:700; font-size:44px; line-height:1.1; }
       h2{ font-weight:700; font-size:28px; line-height:1.3; }
       .lead{ font-size:18px; line-height:28px; color:#444; }
@@ -98,31 +81,33 @@
       .btn-outline{ border:1px solid var(--border); color:var(--color-primary); background:transparent; }
       .btn-outline:hover{ border-color:var(--color-secondary); color:var(--color-secondary); }
       #hero{ position:relative; background: radial-gradient(circle at 85% 25%, rgba(0,74,173,0.08), transparent 70%), var(--bg-base); }
-      .hero{ grid-template-columns: 1fr 1fr; gap: 40px; }
+      .hero{ display:grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items:center; }
       #hero::after{ content:""; position:absolute; inset:auto -10% -20% auto; width:60vw; height:60vh; background: radial-gradient(55% 55% at 50% 50%, rgba(0,74,173,.10) 0%, rgba(0,74,173,0) 70%); pointer-events:none; z-index:0; }
       #hero > *{ position:relative; z-index:1; }
       .hero-content p.lead, #hero header p{ font-size:18px; color:#444; }
       #hero [role="button"]{}
       #hero [role="button"]:hover{}
       .hero-ctas{ display:flex; gap:12px; flex-wrap:wrap; }
-      .form-card { border: 1px solid #E6E8EC; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.06); background:#fff; }
+      .form-card { border: 1px solid #E6E8EC; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); background:#fff; }
       .hero-form{ background:var(--bg-white); padding:24px; }
       .form-brand{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
       .form-brand img{ height:28px; }
       .badge{ display:inline-flex; align-items:center; gap:6px; background:#E9F2FF; color:var(--color-secondary); border:1px solid #D6E7FF; padding:6px 10px; border-radius:999px; font-weight:600; font-size:.8rem; }
       .lead-form label{ font-weight:600; }
-      .lead-form input, .lead-form textarea { border-radius: 8px; }
+      .lead-form input, .lead-form textarea { border-radius: 10px; padding:12px 14px; border:1px solid #E5E7EB; }
+      .lead-form input:focus, .lead-form textarea:focus, #lead-form select:focus{ outline:2px solid #0098DA; outline-offset:2px; border-color:#0098DA; }
       .icon{ color: currentColor; }
-      .icon-badge{ display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:999px; background:#E9F2FF; margin-right:10px; }
+      .icon-badge{ display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:999px; background:#E9F2FF; color:#004AAD; margin-right:10px; }
       .visually-hidden{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
       .trust-row{display:flex;align-items:center;gap:16px;margin-top:12px}
       .trust-badge{display:inline-block;padding:6px 12px;border-radius:999px;background:#E9F2FF;color:#004AAD;font-weight:600;font-size:12px}
       .logo-strip{display:flex;gap:12px;list-style:none;margin:0;padding:0}
       .logo-strip .logo{width:68px;height:28px;opacity:.4;background:#ECEFF4;border-radius:6px}
       #problema{ background:#fff; text-align:center; }
-      #problema ul{ margin-top:32px; display:grid; gap:24px; grid-template-columns: repeat(3, 1fr); padding:0; }
-      #problema .with-icons li{ display:block; }
-      #problema li{ list-style:none; border:1px solid #E6E8EC; border-radius:14px; padding:32px; text-align:left; transition: all .25s ease; background:#fff; display:block; }
+      #problema ul{ margin-top:32px; display:grid; gap:28px; grid-template-columns: repeat(3, 1fr); padding:0; }
+      #problema .with-icons li{ display:grid; grid-template-rows:auto auto 1fr; align-content:start; }
+      #problema li{ list-style:none; border:1px solid #E6E8EC; border-radius:14px; padding:32px; text-align:left; transition: all .25s ease; background:#fff; display:block; min-height:220px; box-shadow:var(--shadow-sm); }
+      #problema li strong{ display:block; margin-bottom:6px; font-size:16px; color:#111; }
       #problema li .icon-badge{ display:inline-flex; margin:0 0 12px 0; }
       #problema .icon{ color:var(--color-secondary); }
       /* Fade-up animation */
@@ -130,15 +115,15 @@
       [data-animate="fade-up"].in{ opacity:1; transform: translateY(0); }
       #problema li:hover{ box-shadow:0 6px 16px rgba(0,0,0,0.06); transform: translateY(-4px); }
       #solucao{ background:#F6F7F9; }
-      .solucao-grid{ display:grid; grid-template-columns: 1.1fr .9fr; gap:48px; align-items:center; }
+      .solucao-grid{ display:grid; grid-template-columns: 1.1fr .9fr; gap:56px; align-items:center; }
       .solucao-grid .mockup{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:10px; box-shadow:0 2px 10px rgba(0,0,0,.05); }
       .mockup img{ border-radius:14px; box-shadow:0 10px 32px rgba(0,0,0,0.08); }
       #solucao .with-icons .icon{ color:#0098DA; }
       #prova-social{ background:#fff; text-align:center; }
-      .testimonials{ display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; margin-top:24px; }
-      .testimonial-card{ position:relative; background:#FCFCFC; border:1px solid #EEE; border-radius:12px; padding:24px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
-      .testimonial-card blockquote{ margin:0; }
-      .testimonial-card::before{ content:"“"; position:absolute; top:-10px; left:16px; font-size:60px; color:#0098DA; opacity:.15; }
+      .testimonials{ display:grid; grid-template-columns: repeat(3, 1fr); gap:20px; margin-top:24px; }
+      .testimonial-card{ position:relative; background:#FCFCFC; border:1px solid #EEE; border-radius:12px; padding:24px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); text-align:left; }
+      .testimonial-card blockquote{ margin:0; color:#222; }
+      .testimonial-card::before{ content:"\201C"; position:absolute; top:-10px; left:16px; font-size:60px; color:#0098DA; opacity:.15; }
       #prova-social figcaption{ margin-top:12px; display:flex; align-items:center; gap:10px; color:#111; }
       .avatar{ width:36px; height:36px; border-radius:999px; background:#DDD; display:inline-block; }
       #prova-social figure{ border:none; box-shadow:none; padding:0; }
