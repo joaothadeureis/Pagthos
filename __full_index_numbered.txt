@@ -1,0 +1,579 @@
+   1: <!doctype html>
+   2: <html lang="pt-BR">
+   3:   <head>
+   4:     <meta charset="utf-8" />
+   5:     <meta name="viewport" content="width=device-width, initial-scale=1" />
+   6:     <title>Integre Pagthos ao eGestor | Crediário profissional com cobrança automática</title>
+   7:     <meta name="description" content="Integre o Pagthos ao eGestor e tenha um crediário profissional: cobrança automática, consulta SPC/Serasa, boletos e carnês, relatórios e controle completo de inadimplência." />
+   8:     <style>
+   9:       /* Layout mínimo para colocar o formulário na primeira dobra (lado direito) */
+  10:       .hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: start; }
+  11:       .hero-content { display: grid; gap: 16px; }
+  12:       .hero-form { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; }
+  13:       .lead-form .row { display: grid; gap: 6px; margin-bottom: 12px; }
+  14:       .lead-form label { font-size: 0.95rem; }
+  15:       .lead-form input, .lead-form textarea { padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; }
+  16:       .lead-form button { padding: 10px 14px; border: 0; border-radius: 6px; cursor: pointer; }
+  17:       .lead-form .primary { background: #111827; color: #fff; }
+  18:       .lead-form .secondary { background: #f3f4f6; color: #111827; }
+  19:       fieldset { border: 0; margin: 0; padding: 0; }
+  20:       [hidden] { display: none !important; }
+  21:       .stepper { font-size: 0.9rem; color: #6b7280; margin-bottom: 8px; }
+  22:       figure { margin: 0; }
+  23:       img { max-width: 100%; height: auto; }
+  24:       /* Ícones */
+  25:       .icon { width: 1.1em; height: 1.1em; vertical-align: -0.15em; margin-right: 8px; color: #111827; }
+  26:       .with-icons { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  27:       .with-icons li { display: flex; align-items: flex-start; }
+  28:       .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+  29:       @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } }
+  30:     </style>
+  31:     <!-- Sprite de ícones inline -->
+  32:     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none" aria-hidden="true">
+  33:       <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  34:         <circle cx="12" cy="12" r="9" />
+  35:         <path d="M12 7v5l3 3" />
+  36:       </symbol>
+  37:       <symbol id="i-trend-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  38:         <path d="M21 7l-8 8-4-4-6 6" />
+  39:       </symbol>
+  40:       <symbol id="i-x-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  41:         <circle cx="12" cy="12" r="9" />
+  42:         <path d="M15 9L9 15M9 9l6 6" />
+  43:       </symbol>
+  44:       <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  45:         <rect x="3" y="5" width="18" height="12" rx="2" />
+  46:         <path d="M8 17l-3 3v-3" />
+  47:       </symbol>
+  48:       <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  49:         <circle cx="11" cy="11" r="7" />
+  50:         <path d="M21 21l-4.35-4.35" />
+  51:       </symbol>
+  52:       <symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  53:         <rect x="2" y="6" width="20" height="12" rx="2" />
+  54:         <path d="M2 10h20" />
+  55:       </symbol>
+  56:       <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  57:         <rect x="3" y="10" width="4" height="8" />
+  58:         <rect x="10" y="6" width="4" height="12" />
+  59:         <rect x="17" y="13" width="4" height="5" />
+  60:       </symbol>
+  61:       <symbol id="i-document" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  62:         <path d="M14 2H6a2 2 0 0 0-2 2v16h12a2 2 0 0 0 2-2V8z" />
+  63:         <path d="M14 2v6h6" />
+  64:       </symbol>
+  65:       <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  66:         <path d="M20 6L9 17l-5-5" />
+  67:       </symbol>
+  68:       <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  69:         <path d="M18 6L6 18M6 6l12 12" />
+  70:       </symbol>
+  71:       <symbol id="i-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  72:         <path d="M12 3l9 18H3z" />
+  73:         <path d="M12 9v5" />
+  74:         <path d="M12 18h.01" />
+  75:       </symbol>
+  76:     </svg>
+  77:     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  78:     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  79:     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  80:     <style id="theme-overrides">
+  81:       :root{
+  82:         --color-primary:#1A1A1A; --color-secondary:#004AAD; --color-accent:#0098DA;
+  83:         --bg-base:#FCFCFC; --bg-white:#FFFFFF; --bg-soft:#F6F6F6; --bg-softer:#F8F8F8;
+  84:         --border:#E5E5E5; --border-soft:#EDEDED; --yes:#00B87B; --no:#E74C3C; --warn:#F59E0B; --wrap:1200px;
+  85:       }
+  86:       #teste-gratuito-sec, footer form { display:none !important; }
+  87:       body{ font-family:'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", sans-serif; color:var(--color-primary); background:var(--bg-base); }
+  88:       section{ max-width:var(--wrap); margin:0 auto; padding:96px 24px; }
+  89:       h1{ font-weight:700; font-size:44px; line-height:1.1; }
+  90:       h2{ font-weight:700; font-size:28px; line-height:1.3; }
+  91:       .lead{ font-size:18px; line-height:28px; color:#444; }
+  92:       .with-icons li{ font-size:16px; line-height:26px; }
+  93:       a{ color:var(--color-secondary); text-decoration:none; }
+  94:       a:hover{ color:var(--color-accent); }
+  95:       [role="button"], .btn, button{ display:inline-flex; align-items:center; justify-content:center; gap:8px; font-weight:600; border-radius:8px; padding:12px 18px; transition: all .2s ease; }
+  96:       .btn-primary, [role="button"].btn-primary{ background:var(--color-secondary); color:#fff; }
+  97:       .btn-primary:hover{ background:#0360d3; }
+  98:       .btn-outline{ border:1px solid var(--border); color:var(--color-primary); background:transparent; }
+  99:       .btn-outline:hover{ border-color:var(--color-secondary); color:var(--color-secondary); }
+ 100:       #hero{ position:relative; background: radial-gradient(circle at 85% 25%, rgba(0,74,173,0.08), transparent 70%), var(--bg-base); }
+ 101:       .hero{ grid-template-columns: 1fr 1fr; gap: 40px; }
+ 102:       #hero::after{ content:""; position:absolute; inset:auto -10% -20% auto; width:60vw; height:60vh; background: radial-gradient(55% 55% at 50% 50%, rgba(0,74,173,.10) 0%, rgba(0,74,173,0) 70%); pointer-events:none; z-index:0; }
+ 103:       #hero > *{ position:relative; z-index:1; }
+ 104:       .hero-content p.lead, #hero header p{ font-size:18px; color:#444; }
+ 105:       #hero [role="button"]{}
+ 106:       #hero [role="button"]:hover{}
+ 107:       .hero-ctas{ display:flex; gap:12px; flex-wrap:wrap; }
+ 108:       .form-card { border: 1px solid #E6E8EC; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.06); background:#fff; }
+ 109:       .hero-form{ background:var(--bg-white); padding:24px; }
+ 110:       .form-brand{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+ 111:       .form-brand img{ height:28px; }
+ 112:       .badge{ display:inline-flex; align-items:center; gap:6px; background:#E9F2FF; color:var(--color-secondary); border:1px solid #D6E7FF; padding:6px 10px; border-radius:999px; font-weight:600; font-size:.8rem; }
+ 113:       .lead-form label{ font-weight:600; }
+ 114:       .lead-form input, .lead-form textarea { border-radius: 8px; }
+ 115:       .icon{ color: currentColor; }
+ 116:       .icon-badge{ display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:999px; background:#E9F2FF; margin-right:10px; }
+ 117:       .visually-hidden{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+ 118:       .trust-row{display:flex;align-items:center;gap:16px;margin-top:12px}
+ 119:       .trust-badge{display:inline-block;padding:6px 12px;border-radius:999px;background:#E9F2FF;color:#004AAD;font-weight:600;font-size:12px}
+ 120:       .logo-strip{display:flex;gap:12px;list-style:none;margin:0;padding:0}
+ 121:       .logo-strip .logo{width:68px;height:28px;opacity:.4;background:#ECEFF4;border-radius:6px}
+ 122:       #problema{ background:#fff; text-align:center; }
+ 123:       #problema ul{ margin-top:32px; display:grid; gap:24px; grid-template-columns: repeat(3, 1fr); padding:0; }
+ 124:       #problema .with-icons li{ display:block; }
+ 125:       #problema li{ list-style:none; border:1px solid #E6E8EC; border-radius:14px; padding:32px; text-align:left; transition: all .25s ease; background:#fff; display:block; }
+ 126:       #problema li .icon-badge{ display:inline-flex; margin:0 0 12px 0; }
+ 127:       #problema li:hover{ box-shadow:0 6px 16px rgba(0,0,0,0.06); transform: translateY(-4px); }
+ 128:       #solucao{ background:#F6F7F9; }
+ 129:       .solucao-grid{ display:grid; grid-template-columns: 1.1fr .9fr; gap:48px; align-items:center; }
+ 130:       .solucao-grid .mockup{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:10px; box-shadow:0 2px 10px rgba(0,0,0,.05); }
+ 131:       .mockup img{ border-radius:14px; box-shadow:0 10px 32px rgba(0,0,0,0.08); }
+ 132:       #solucao .with-icons .icon{ color:#0098DA; }
+ 133:       #prova-social{ background:#fff; text-align:center; }
+ 134:       .testimonials{ display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; margin-top:24px; }
+ 135:       .testimonial{ border:1px solid var(--border-soft); border-radius:12px; padding:18px; text-align:left; }
+ 136:       #prova-social figure{ position:relative; background:#FCFCFC; border:1px solid #EEE; border-radius:12px; padding:24px; max-width:780px; margin:24px auto 0; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+ 137:       #prova-social figure::before{ content:"“"; position:absolute; top:-10px; left:16px; font-size:60px; color:#0098DA; opacity:.15; }
+ 138:       #prova-social figcaption{ color:#004AAD; font-weight:600; }
+ 139:       #comparativo{ background:#F8F9FB; text-align:center; }
+ 140:       #comparativo .comp-table{ width:100%; border-collapse:separate; border-spacing:0; background:#fff; border-radius:10px; overflow:hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+ 141:       #comparativo thead th{ text-align:left; background:#F3F4F6; font-weight:600; padding:20px 16px; }
+ 142:       #comparativo tbody td{ padding:20px 16px; border-bottom:1px solid #eee; }
+ 143:       #comparativo tbody tr:nth-child(odd){ background:#FFF; }
+ 144:       #comparativo tbody tr:nth-child(even){ background:#F3F6FA; }
+ 145:       .cell-yes .icon{ color:var(--yes); }
+ 146:       .cell-no .icon{ color:var(--no); }
+ 147:       .cell-warn .icon{ color:var(--warn); }
+ 148:       /* Tabela responsiva (stack em mobile) */
+ 149:       @media(max-width:768px){
+ 150:         #comparativo.comp thead{display:none}
+ 151:         #comparativo.comp table, #comparativo.comp tbody, #comparativo.comp tr, #comparativo.comp td{display:block;width:100%}
+ 152:         #comparativo.comp tr{margin-bottom:16px;background:#fff}
+ 153:         #comparativo.comp td{border-bottom:1px solid #eee}
+ 154:       }
+ 155:       /* Select styling */
+ 156:       #lead-form select{width:100%;padding:12px 14px;border:1px solid #E5E7EB;border-radius:10px;background:#fff}
+ 157:       #oportunidade{ background:var(--color-secondary); color:#fff; text-align:center; }
+ 158:       #oportunidade h2{ color:#fff; }
+ 159:       #oportunidade p{ color:#E5E7EB; }
+ 160:       #oportunidade .btn-contrast{ background:#fff; color:var(--color-secondary); }
+ 161:       #oportunidade [role="button"]{ background:#fff; color:var(--color-secondary); border-radius:8px; padding:12px 18px; font-weight:600; display:inline-flex; }
+ 162:       #oportunidade [role="button"]:hover{ background:#E9F2FF; }
+ 163:       #faq{ background:#fff; border-top:1px solid #E5E5E5; }
+ 164:       #faq details{ border-top:1px solid var(--border); padding:16px 0; }
+ 165:       #faq details:first-of-type{ border-top:0; }
+ 166:       #faq summary{ list-style:none; cursor:pointer; font-weight:600; position:relative; padding:20px 26px 20px 0; border-bottom:1px solid #EEE; }
+ 167:       #faq summary::-webkit-details-marker{ display:none; }
+ 168:       #faq summary::after{ content:"+"; position:absolute; right:0; top:0; font-weight:700; color:#6B7280; }
+ 169:       #faq details[open] summary::after{ content:"-"; }
+ 170:       #faq details:hover{ background:#F9FAFB; }
+ 171:       footer{ background:#1A1A1A; color:#FCFCFC; padding:28px 24px; }
+ 172:       footer p{ max-width:var(--wrap); margin:0 auto; text-align:center; opacity:.8; }
+ 173:       @media (max-width: 900px){ .hero{ grid-template-columns:1fr; } #problema ul{ grid-template-columns:1fr; } .solucao-grid{ grid-template-columns:1fr; } }
+ 174:     </style>
+ 175:   </head>
+ 176:   <body>
+ 177:     <a href="#conteudo" style="position:absolute;left:-9999px;">Pular para o conteúdo</a>
+ 178: 
+ 179:     <main id="conteudo">
+ 180:       <!-- 1️⃣ Hero Section -->
+ 181:       <section id="hero" class="hero" aria-labelledby="hero-title">
+ 182:         <div class="hero-content">
+ 183:         <header>
+ 184:           <h1 id="hero-title">Integre o Pagthos ao seu eGestor e tenha um crediário profissional na sua loja</h1>
+ 185:           <p>O eGestor cuida da gestão. O Pagthos cuida das cobranças. Automatize o seu crediário, reduza a inadimplência e venda fiado com segurança.</p>
+ 186:         </header>
+ 187: 
+ 188:         <p>
+ 189:           <a href="#lead-form" class="btn btn-primary" role="button" aria-label="Quero integrar agora" data-gtm="cta_hero">Quero integrar agora</a>
+ 190:         </p>
+ 191:         <div class="trust-row">
+ 192:           <span class="trust-badge">500+ lojas integradas</span>
+ 193:           <ul class="logo-strip" aria-label="Lojas que usam Pagthos">
+ 194:             <li class="logo logo--placeholder" aria-hidden="true"></li>
+ 195:             <li class="logo logo--placeholder" aria-hidden="true"></li>
+ 196:             <li class="logo logo--placeholder" aria-hidden="true"></li>
+ 197:           </ul>
+ 198:         </div>
+ 199: 
+ 200:         <figure>
+ 201:           <img src="/assets/mockup-pagthos-egestor.webp" width="1600" height="1000" alt="Integração Pagthos + eGestor em funcionamento" />
+ 202:           <figcaption>Integração completa para o seu crediário</figcaption>
+ 203:         </figure>
+ 204:         </div>
+ 205:         <aside class="hero-form form-card" aria-label="Formulário de demonstração">
+ 206:           <form id="lead-form" class="lead-form" action="#" method="post" novalidate>
+ 207:             <div class="form-brand">
+ 208:               <img src="https://pagthos.com.br/wp-content/uploads/2025/08/logo-1.png" alt="Pagthos" />
+ 209:               <span class="badge">Integração eGestor</span>
+ 210:             </div>
+ 211:             <div class="stepper" aria-live="polite"><span data-indicator>01</span> de 02</div>
+ 212: 
+ 213:             <fieldset data-step="1">
+ 214:               <div class="row">
+ 215:                 <label for="nome">Digite seu nome</label>
+ 216:                 <input id="nome" name="nome" type="text" placeholder="Escreva seu nome completo" required />
+ 217:               </div>
+ 218:               <div class="row">
+ 219:                 <label for="email">E-mail</label>
+ 220:                 <input id="email" name="email" type="email" placeholder="Digite seu melhor E-mail" required />
+ 221:               </div>
+ 222:               <div class="row">
+ 223:                 <label for="telefone">Telefone/ WhatsApp</label>
+ 224:                 <input id="telefone" name="telefone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(00) 0 0000-0000" pattern="^\(\d{2}\)\s?(?:9\s?)?\d{4}-\d{4}$" required />
+ 225:               </div>
+ 226:               <div class="row">
+ 227:                 <button type="button" class="primary" data-action="next">Próxima Etapa</button>
+ 228:               </div>
+ 229:             </fieldset>
+ 230: 
+ 231:             <fieldset data-step="2" hidden>
+ 232:               <div class="row">
+ 233:                 <label for="empresa">Nome da empresa</label>
+ 234:                 <input id="empresa" name="empresa" type="text" placeholder="Escreva o nome da empresa" required />
+ 235:               </div>
+ 236:               <div class="row">
+ 237:                 <label for="segmento" class="visually-hidden">Segmento da empresa</label>
+ 238:                 <select id="segmento" name="segmento" required>
+ 239:                   <option value="" selected disabled>Segmento da empresa</option>
+ 240:                   <option>Moda</option>
+ 241:                   <option>Calçados</option>
+ 242:                   <option>Móveis</option>
+ 243:                   <option>Serviços</option>
+ 244:                   <option>Outros</option>
+ 245:                 </select>
+ 246:               </div>
+ 247:               <div class="row">
+ 248:                 <label for="necessidade">Qual é a principal necessidade da sua empresa hoje em relação à gestão de crediário?</label>
+ 249:                 <textarea id="necessidade" name="necessidade" rows="3" placeholder="Conte em poucas palavras" required></textarea>
+ 250:               </div>
+ 251:               <div class="row" style="display:flex; gap:8px;">
+ 252:                 <button type="button" class="secondary" data-action="back">Voltar</button>
+ 253:                 <button type="submit" class="primary">Solicitar demonstração gratuita</button>
+ 254:               </div>
+ 255:             </fieldset>
+ 256:           </form>
+ 257:         </aside>
+ 258:       </section>
+ 259: 
+ 260:       <!-- 2️⃣ O problema atual -->
+ 261:       <section id="problema" aria-labelledby="problema-title">
+ 262:         <h2 id="problema-title">O eGestor é ótimo na gestão, mas não resolve o seu crediário</h2>
+ 263:         <p>
+ 264:           Você já tem o eGestor, controla vendas e estoque — mas e o crediário?
+ 265:           Cobrar manualmente, acompanhar atrasos e fazer consultas de crédito na correria é o que mais toma tempo e gera perdas.
+ 266:         </p>
+ 267:         <ul class="with-icons">
+ 268:           <li>⏰ <strong>Cobranças manuais</strong> e esquecidas</li>
+ 269:           <li>📉 <strong>Inadimplência crescente</strong></li>
+ 270:           <li>❌ <strong>Sem análise SPC/Serasa</strong></li>
+ 271:         </ul>
+ 272:       </section>
+ 273: 
+ 274:       <!-- 3️⃣ A solução -->
+ 275:       <section id="solucao" aria-labelledby="solucao-title">
+ 276:         <div class="solucao-grid">
+ 277:           <figure class="mockup">
+ 278:             <img src="/assets/mockup-pagthos-egestor.webp" width="1600" height="1000" alt="Integração Pagthos + eGestor em funcionamento"  loading="lazy" decoding="async" />
+ 279:           </figure>
+ 280:           <div class="content">
+ 281:         <h2 id="solucao-title">Pagthos: o complemento perfeito para o seu eGestor</h2>
+ 282:         <p>
+ 283:           O Pagthos se integra ao eGestor para resolver o que falta: automação no crediário, consultas de crédito e cobrança inteligente.
+ 284:           Você continua usando o sistema que já conhece — mas com muito mais segurança e controle sobre quem paga e quem atrasa.
+ 285:         </p>
+ 286:         <ul>
+ 287:           <li>💬 <strong>Cobrança automática</strong> via WhatsApp, SMS e e-mail</li>
+ 288:           <li>🔍 <strong>Consulta SPC e Serasa</strong> integrada</li>
+ 289:           <li>💳 <strong>Emissão de boletos e carnês</strong></li>
+ 290:           <li>📊 <strong>Relatórios e alertas de inadimplência</strong></li>
+ 291:           <li>🧾 <strong>Negativação de clientes com 1 clique</strong></li>
+ 292:         </ul>
+ 293:         <p>
+ 294:           <a href="#comparativo" class="btn btn-primary" role="button" aria-label="Ver como funciona">Ver como funciona</a>
+ 295:         </p>
+ 296:           </div>
+ 297:         </div>
+ 298:       </section>
+ 299: 
+ 300:       <!-- 4️⃣ Prova social / autoridade -->
+ 301:       <section id="prova-social" aria-labelledby="prova-title">
+ 302:         <p class="badge">+500 lojas já utilizam o Pagthos</p>
+ 303:         <h2 id="prova-title">Mais de 500 lojas já automatizam o crediário com o Pagthos</h2>
+ 304:         <p>
+ 305:           Lojistas de todo o Brasil estão transformando o fiado em lucro, com segurança e controle.
+ 306:           Não é sobre vender mais — é sobre receber melhor.
+ 307:         </p>
+ 308:         <figure>
+ 309:           <blockquote>
+ 310:             <p>“Depois da integração com o Pagthos, reduzi em 40% a inadimplência e nunca mais precisei cobrar cliente no WhatsApp!”</p>
+ 311:           </blockquote>
+ 312:           <figcaption>Loja Estilo Fashion – Campinas/SP</figcaption>
+ 313:         </figure>
+ 314:       </section>
+ 315: 
+ 316:       <!-- 5️⃣ Comparativo direto -->
+ 317:       <section id="comparativo" class="comp" aria-labelledby="comparativo-title">
+ 318:         <h2 id="comparativo-title">eGestor + Pagthos: o sistema completo para quem vende a prazo</h2>
+ 319:         <table class="comp-table" aria-label="Comparativo de funcionalidades">
+ 320:           <thead>
+ 321:             <tr>
+ 322:               <th scope="col">Função</th>
+ 323:               <th scope="col">Somente eGestor</th>
+ 324:               <th scope="col">eGestor + Pagthos</th>
+ 325:             </tr>
+ 326:           </thead>
+ 327:           <tbody>
+ 328:             <tr>
+ 329:               <td>Gestão de estoque e vendas</td>
+ 330:               <td>✅</td>
+ 331:               <td>✅</td>
+ 332:             </tr>
+ 333:             <tr>
+ 334:               <td>Emissão de boletos e carnês</td>
+ 335:               <td>⚠️ Manual</td>
+ 336:               <td>✅ Automático</td>
+ 337:             </tr>
+ 338:             <tr>
+ 339:               <td>Consulta SPC/Serasa</td>
+ 340:               <td>❌</td>
+ 341:               <td>✅</td>
+ 342:             </tr>
+ 343:             <tr>
+ 344:               <td>Cobrança via WhatsApp e SMS</td>
+ 345:               <td>❌</td>
+ 346:               <td>✅</td>
+ 347:             </tr>
+ 348:             <tr>
+ 349:               <td>Controle de inadimplência</td>
+ 350:               <td>Parcial</td>
+ 351:               <td>✅ Completo</td>
+ 352:             </tr>
+ 353:             <tr>
+ 354:               <td>Relatórios e alertas automáticos</td>
+ 355:               <td>❌</td>
+ 356:               <td>✅</td>
+ 357:             </tr>
+ 358:           </tbody>
+ 359:         </table>
+ 360: 
+ 361:         <p>
+ 362:           <a href="#lead-form" class="btn btn-primary" role="button" aria-label="Quero integrar agora" data-gtm="cta_comparativo">Quero integrar agora</a>
+ 363:         </p>
+ 364:       </section>
+ 365: 
+ 366:       <!-- 6️⃣ Chamada de oportunidade -->
+ 367:       <section id="oportunidade" aria-labelledby="oportunidade-title">
+ 368:         <h2 id="oportunidade-title">Tenha um sistema de crediário próprio profissional na sua loja</h2>
+ 369:         <p>
+ 370:           Venda mais e melhor, sem sofrer com o aumento da inadimplência.
+ 371:           O Pagthos é o que faltava para transformar o seu crediário em uma ferramenta lucrativa.
+ 372:         </p>
+ 373:         <p>
+ 374:           <a href="#lead-form" role="button" aria-label="Quero testar a integração gratuitamente" data-gtm="cta_oportunidade">Quero testar a integração gratuitamente</a>
+ 375:         </p>
+ 376:       </section>
+ 377: 
+ 378:       <!-- 7️⃣ Dúvidas frequentes (FAQ) -->
+ 379:       <section id="faq" aria-labelledby="faq-title">
+ 380:         <h2 id="faq-title">Dúvidas sobre a integração? A gente explica:</h2>
+ 381: 
+ 382:         <details>
+ 383:   <summary aria-controls="faq1" aria-expanded="false">O Pagthos funciona dentro do eGestor?</summary>
+ 384:   <div id="faq1" role="region" aria-label="Resposta: funciona no eGestor">
+ 385:     <p>Sim. O Pagthos complementa o eGestor sem substituir nenhuma função — apenas adiciona recursos de cobrança, crédito e controle de fiado.</p>
+ 386:   </div>
+ 387: </details>
+ 388: 
+ 389:         <details>
+ 390:   <summary aria-controls="faq2" aria-expanded="false">Preciso mudar meu sistema?</summary>
+ 391:   <div id="faq2" role="region" aria-label="Resposta: precisa mudar o sistema?">
+ 392:     <p>Não. Basta conectar o Pagthos ao seu eGestor atual.</p>
+ 393:   </div>
+ 394: </details>
+ 395: 
+ 396:         <details>
+ 397:   <summary aria-controls="faq3" aria-expanded="false">Posso testar antes de contratar?</summary>
+ 398:   <div id="faq3" role="region" aria-label="Resposta: teste antes de contratar">
+ 399:     <p>Sim! Oferecemos um teste gratuito para conhecer todas as funções.</p>
+ 400:   </div>
+ 401: </details>
+ 402:       </section>
+ 403: 
+ 404:       <!-- 8️⃣ Encerramento + CTA final -->
+ 405:       <section id="encerramento" aria-labelledby="encerramento-title">
+ 406:         <h2 id="encerramento-title">Comece hoje a vender fiado com segurança</h2>
+ 407:         <p>
+ 408:           <a href="#lead-form" role="button" aria-label="Solicitar demonstração gratuita">Solicitar demonstração gratuita</a>
+ 409:         </p>
+ 410:       </section>
+ 411: 
+ 412:       <!-- Âncora de captação simples (sem CSS por enquanto) -->
+ 413:       <section id="teste-gratuito-sec" aria-labelledby="teste-title">
+ 414:         <h2 id="teste-title">Solicite uma demonstração</h2>
+ 415:         <p>Preencha seus dados para conhecer a integração Pagthos + eGestor.</p>
+ 416:         <form action="#" method="post" aria-label="Formulário de demonstração">
+ 417:           <div>
+ 418:             <label for="nome">Nome</label>
+ 419:             <input id="nome" name="nome" type="text" required />
+ 420:           </div>
+ 421:           <div>
+ 422:             <label for="loja">Empresa/Loja</label>
+ 423:             <input id="loja" name="loja" type="text" required />
+ 424:           </div>
+ 425:           <div>
+ 426:             <label for="telefone">Telefone / WhatsApp</label>
+ 427:             <input id="telefone" name="telefone" type="tel" inputmode="tel" required />
+ 428:           </div>
+ 429:           <div>
+ 430:             <label for="email">E-mail</label>
+ 431:             <input id="email" name="email" type="email" required />
+ 432:           </div>
+ 433:           <div>
+ 434:             <button type="submit">Solicitar demonstração gratuita</button>
+ 435:           </div>
+ 436:         </form>
+ 437:       </section>
+ 438:     </main>
+ 439: 
+ 440:     <footer aria-label="Rodapé">
+ 441:       <p>Pagthos © 2025 – Sistema de crediário profissional para o varejo. Parceiro oficial do eGestor.</p>
+ 442:     </footer>
+ 443:     <script>
+ 444:       (function () {
+ 445:         var form = document.querySelector('#lead-form');
+ 446:         if (!form) return;
+ 447:         var step1 = form.querySelector('[data-step="1"]');
+ 448:         var step2 = form.querySelector('[data-step="2"]');
+ 449:         var next = form.querySelector('[data-action="next"]');
+ 450:         var back = form.querySelector('[data-action="back"]');
+ 451:         var indicator = form.querySelector('[data-indicator]');
+ 452:         function goTo(n) {
+ 453:           if (n === 1) { step1.hidden = false; step2.hidden = true; if (indicator) indicator.textContent = '01'; }
+ 454:           if (n === 2) { step1.hidden = true; step2.hidden = false; if (indicator) indicator.textContent = '02'; }
+ 455:         }
+ 456:         if (next) next.addEventListener('click', function () {
+ 457:           var inputs = step1.querySelectorAll('input');
+ 458:           var valid = true;
+ 459:           for (var i = 0; i < inputs.length; i++) {
+ 460:             if (!inputs[i].reportValidity()) { valid = false; break; }
+ 461:           }
+ 462:           if (valid) goTo(2);
+ 463:         });
+ 464:         if (back) back.addEventListener('click', function () { goTo(1); });
+ 465:         // Máscara simples para Telefone/WhatsApp
+ 466:         var tel = form.querySelector('#telefone');
+ 467:         if (tel) {
+ 468:           tel.addEventListener('input', function(){
+ 469:             var d = tel.value.replace(/\D/g,'').slice(0,11);
+ 470:             tel.dataset.raw = d;
+ 471:           });
+ 472:           tel.addEventListener('blur', function(){
+ 473:             var d = (tel.dataset.raw || tel.value.replace(/\D/g,'')).slice(0,11);
+ 474:             if (d.length === 11) { // celular
+ 475:               tel.value = '('+d.slice(0,2)+') '+d.slice(2,3)+' '+d.slice(3,7)+'-'+d.slice(7,11);
+ 476:             } else if (d.length === 10) { // fixo
+ 477:               tel.value = '('+d.slice(0,2)+') '+d.slice(2,6)+'-'+d.slice(6,10);
+ 478:             }
+ 479:           });
+ 480:         }
+ 481:       })();
+ 482:       (function () {
+ 483:         function svgUse(id) {
+ 484:           var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+ 485:           svg.setAttribute('class', 'icon');
+ 486:           svg.setAttribute('aria-hidden', 'true');
+ 487:           var use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+ 488:           use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#' + id);
+ 489:           use.setAttribute('href', '#' + id);
+ 490:           svg.appendChild(use);
+ 491:           return svg;
+ 492:         }
+ 493:         function replaceListIcons(selector, iconIds) {
+ 494:           var list = document.querySelector(selector);
+ 495:           if (!list) return;
+ 496:           var items = list.querySelectorAll('li');
+ 497:           for (var i = 0; i < iconIds.length && i < items.length; i++) {
+ 498:             var li = items[i];
+ 499:             if (li.firstChild && li.firstChild.nodeType === 3) {
+ 500:               var t = li.firstChild.nodeValue || '';
+ 501:               // remove primeiro glifo (emoji) e espaços
+ 502:               var replaced = t.replace(/^\s*\S+\s*/, '');
+ 503:               if (replaced.trim().length === 0) {
+ 504:                 li.removeChild(li.firstChild);
+ 505:               } else {
+ 506:                 li.firstChild.nodeValue = replaced;
+ 507:               }
+ 508:             }
+ 509:             var wrap = document.createElement('span');
+ 510:             wrap.className = 'icon-badge';
+ 511:             wrap.appendChild(svgUse(iconIds[i]));
+ 512:             li.insertBefore(wrap, li.firstChild || null);
+ 513:           }
+ 514:         }
+ 515:         function setCellIcon(cell, iconId, text, srText) {
+ 516:           if (!cell) return;
+ 517:           while (cell.firstChild) cell.removeChild(cell.firstChild);
+ 518:           if (iconId === 'i-check') cell.className += ' cell-yes';
+ 519:           if (iconId === 'i-x') cell.className += ' cell-no';
+ 520:           if (iconId === 'i-warning') cell.className += ' cell-warn';
+ 521:           cell.appendChild(svgUse(iconId));
+ 522:           if (text) cell.appendChild(document.createTextNode(' ' + text));
+ 523:           if (srText) {
+ 524:             var sr = document.createElement('span');
+ 525:             sr.className = 'sr-only';
+ 526:             sr.textContent = srText;
+ 527:             cell.appendChild(sr);
+ 528:           }
+ 529:         }
+ 530:         // Problema: 3 ícones
+ 531:         replaceListIcons('#problema ul', ['i-clock','i-trend-down','i-x-circle']);
+ 532:         // Solução: 5 ícones
+ 533:         replaceListIcons('#solucao ul', ['i-chat','i-search','i-card','i-chart','i-document']);
+ 534:         // Comparativo: substituir emojis nas células por ícones
+ 535:         var tbody = document.querySelector('#comparativo tbody');
+ 536:         if (tbody) {
+ 537:           var rows = tbody.querySelectorAll('tr');
+ 538:           if (rows[0]) { setCellIcon(rows[0].children[1], 'i-check', 'Sim', 'Sim'); setCellIcon(rows[0].children[2], 'i-check', 'Sim', 'Sim'); }
+ 539:           if (rows[1]) { setCellIcon(rows[1].children[1], 'i-warning', 'Manual'); setCellIcon(rows[1].children[2], 'i-check', 'Automático'); }
+ 540:           if (rows[2]) { setCellIcon(rows[2].children[1], 'i-x', 'Não', 'Não'); setCellIcon(rows[2].children[2], 'i-check', 'Sim', 'Sim'); }
+ 541:           if (rows[3]) { setCellIcon(rows[3].children[1], 'i-x', 'Não', 'Não'); setCellIcon(rows[3].children[2], 'i-check', 'Sim', 'Sim'); }
+ 542:           if (rows[4]) { /* mantém 'Parcial' */ setCellIcon(rows[4].children[2], 'i-check', 'Completo'); }
+ 543:           if (rows[5]) { setCellIcon(rows[5].children[1], 'i-x', 'Não', 'Não'); setCellIcon(rows[5].children[2], 'i-check', 'Sim', 'Sim'); }
+ 544:         }
+ 545:         // Smooth scroll e foco no form
+ 546:         document.querySelectorAll('a[href="#lead-form"]').forEach(function(a){
+ 547:           a.addEventListener('click', function(e){
+ 548:             var form = document.getElementById('lead-form');
+ 549:             if(!form) return;
+ 550:             e.preventDefault();
+ 551:             form.scrollIntoView({behavior:'smooth', block:'center'});
+ 552:             setTimeout(function(){
+ 553:               var first = form.querySelector('input,select,textarea,button');
+ 554:               if (first && first.focus) first.focus();
+ 555:             }, 500);
+ 556:           });
+ 557:         });
+ 558:         // FAQ a11y: aria-expanded
+ 559:         document.querySelectorAll('details > summary').forEach(function(s){
+ 560:           s.parentElement.addEventListener('toggle', function(e){
+ 561:             s.setAttribute('aria-expanded', e.target.open ? 'true' : 'false');
+ 562:           });
+ 563:         });
+ 564:       })();
+ 565:     </script>
+ 566:   </body>
+ 567:   <script type="application/ld+json">
+ 568:   {
+ 569:    "@context":"https://schema.org",
+ 570:    "@type":"FAQPage",
+ 571:    "mainEntity":[
+ 572:     {"@type":"Question","name":"Preciso trocar o eGestor?","acceptedAnswer":{"@type":"Answer","text":"Não. O Pagthos complementa o eGestor com cobrança automática, análise de crédito e controle de inadimplência."}},
+ 573:     {"@type":"Question","name":"Posso testar antes de contratar?","acceptedAnswer":{"@type":"Answer","text":"Sim. Oferecemos demonstração e teste gratuito para você validar a integração no seu fluxo."}},
+ 574:     {"@type":"Question","name":"A cobrança é feita por WhatsApp?","acceptedAnswer":{"@type":"Answer","text":"Sim. Também por SMS e e-mail, com lembretes automáticos e relatórios."}}
+ 575:    ]
+ 576:   }
+ 577:   </script>
+ 578:   
+ 579: </html>

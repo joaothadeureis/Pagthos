@@ -124,6 +124,10 @@
       #problema .with-icons li{ display:block; }
       #problema li{ list-style:none; border:1px solid #E6E8EC; border-radius:14px; padding:32px; text-align:left; transition: all .25s ease; background:#fff; display:block; }
       #problema li .icon-badge{ display:inline-flex; margin:0 0 12px 0; }
+      #problema .icon{ color:var(--color-secondary); }
+      /* Fade-up animation */
+      [data-animate="fade-up"]{ opacity:0; transform: translateY(12px); transition: opacity .4s ease, transform .4s ease; }
+      [data-animate="fade-up"].in{ opacity:1; transform: translateY(0); }
       #problema li:hover{ box-shadow:0 6px 16px rgba(0,0,0,0.06); transform: translateY(-4px); }
       #solucao{ background:#F6F7F9; }
       .solucao-grid{ display:grid; grid-template-columns: 1.1fr .9fr; gap:48px; align-items:center; }
@@ -132,10 +136,12 @@
       #solucao .with-icons .icon{ color:#0098DA; }
       #prova-social{ background:#fff; text-align:center; }
       .testimonials{ display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; margin-top:24px; }
-      .testimonial{ border:1px solid var(--border-soft); border-radius:12px; padding:18px; text-align:left; }
-      #prova-social figure{ position:relative; background:#FCFCFC; border:1px solid #EEE; border-radius:12px; padding:24px; max-width:780px; margin:24px auto 0; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
-      #prova-social figure::before{ content:"“"; position:absolute; top:-10px; left:16px; font-size:60px; color:#0098DA; opacity:.15; }
-      #prova-social figcaption{ color:#004AAD; font-weight:600; }
+      .testimonial-card{ position:relative; background:#FCFCFC; border:1px solid #EEE; border-radius:12px; padding:24px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+      .testimonial-card blockquote{ margin:0; }
+      .testimonial-card::before{ content:"“"; position:absolute; top:-10px; left:16px; font-size:60px; color:#0098DA; opacity:.15; }
+      #prova-social figcaption{ margin-top:12px; display:flex; align-items:center; gap:10px; color:#111; }
+      .avatar{ width:36px; height:36px; border-radius:999px; background:#DDD; display:inline-block; }
+      #prova-social figure{ border:none; box-shadow:none; padding:0; }
       #comparativo{ background:#F8F9FB; text-align:center; }
       #comparativo .comp-table{ width:100%; border-collapse:separate; border-spacing:0; background:#fff; border-radius:10px; overflow:hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
       #comparativo thead th{ text-align:left; background:#F3F4F6; font-weight:600; padding:20px 16px; }
@@ -186,7 +192,7 @@
         </header>
 
         <p>
-          <a href="#lead-form" class="btn btn-primary" role="button" aria-label="Quero integrar agora" data-gtm="cta_hero">Quero integrar agora</a>
+          <a href="#lead-form" class="btn btn-outline" role="button" aria-label="Quero integrar agora" data-gtm="cta_hero">Quero integrar agora</a>
         </p>
         <div class="trust-row">
           <span class="trust-badge">500+ lojas integradas</span>
@@ -230,8 +236,8 @@
 
             <fieldset data-step="2" hidden>
               <div class="row">
-                <label for="empresa">Nome da empresa</label>
-                <input id="empresa" name="empresa" type="text" placeholder="Escreva o nome da empresa" required />
+                <label for="loja">Loja</label>
+                <input id="loja" name="loja" type="text" placeholder="Nome da loja" required />
               </div>
               <div class="row">
                 <label for="segmento" class="visually-hidden">Segmento da empresa</label>
@@ -278,7 +284,7 @@
             <img src="/assets/mockup-pagthos-egestor.webp" width="1600" height="1000" alt="Integração Pagthos + eGestor em funcionamento"  loading="lazy" decoding="async" />
           </figure>
           <div class="content">
-        <h2 id="solucao-title">Pagthos: o complemento perfeito para o seu eGestor</h2>
+        <h2 id="solucao-title">Pagthos <strong>complementa</strong> o eGestor</h2>
         <p>
           O Pagthos se integra ao eGestor para resolver o que falta: automação no crediário, consultas de crédito e cobrança inteligente.
           Você continua usando o sistema que já conhece — mas com muito mais segurança e controle sobre quem paga e quem atrasa.
@@ -305,12 +311,35 @@
           Lojistas de todo o Brasil estão transformando o fiado em lucro, com segurança e controle.
           Não é sobre vender mais — é sobre receber melhor.
         </p>
-        <figure>
-          <blockquote>
-            <p>“Depois da integração com o Pagthos, reduzi em 40% a inadimplência e nunca mais precisei cobrar cliente no WhatsApp!”</p>
-          </blockquote>
-          <figcaption>Loja Estilo Fashion – Campinas/SP</figcaption>
-        </figure>
+        <div class="testimonials">
+          <figure class="testimonial-card">
+            <blockquote>
+              <p>“Reduzimos 40% da inadimplência em 90 dias. A cobrança automática salvou nosso time!”</p>
+            </blockquote>
+            <figcaption>
+              <span class="avatar" aria-hidden="true"></span>
+              <div><strong style="color:#004AAD;">Estilo Fashion</strong> — Campinas/SP</div>
+            </figcaption>
+          </figure>
+          <figure class="testimonial-card">
+            <blockquote>
+              <p>“Integração simples e rápida. Hoje controlamos o crediário com segurança e previsibilidade.”</p>
+            </blockquote>
+            <figcaption>
+              <span class="avatar" aria-hidden="true"></span>
+              <div><strong style="color:#004AAD;">Móveis Center</strong> — Curitiba/PR</div>
+            </figcaption>
+          </figure>
+          <figure class="testimonial-card">
+            <blockquote>
+              <p>“Nunca mais precisei cobrar manualmente. Relatórios e alertas nos dão total visibilidade.”</p>
+            </blockquote>
+            <figcaption>
+              <span class="avatar" aria-hidden="true"></span>
+              <div><strong style="color:#004AAD;">Calce Bem</strong> — Recife/PE</div>
+            </figcaption>
+          </figure>
+        </div>
       </section>
 
       <!-- 5️⃣ Comparativo direto -->
