@@ -1,0 +1,12 @@
+      <section id="problema" aria-labelledby="problema-title">
+        <h2 id="problema-title">O eGestor é ótimo na gestão, mas não resolve o seu crediário</h2>
+        <p>
+          Você já tem o eGestor, controla vendas e estoque — mas e o crediário?
+          Cobrar manualmente, acompanhar atrasos e fazer consultas de crédito na correria é o que mais toma tempo e gera perdas.
+        </p>
+        <ul>
+          <li>⏰ <strong>Cobranças manuais</strong> e esquecidas</li>
+          <li>📉 <strong>Inadimplência crescente</strong></li>
+          <li>❌ <strong>Sem análise SPC/Serasa</strong></li>
+        </ul>
+      </section>

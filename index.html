@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pagthos + eGestor — Crediário profissional na sua loja</title>
+    <meta name="description" content="Integre o Pagthos ao eGestor e tenha um crediário profissional: cobrança automática, consulta SPC/Serasa, boletos, carnês e controle completo de inadimplência." />
+    <style>
+      /* Layout mínimo para colocar o formulário na primeira dobra (lado direito) */
+      .hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: start; }
+      .hero-content { display: grid; gap: 16px; }
+      .hero-form { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; }
+      .lead-form .row { display: grid; gap: 6px; margin-bottom: 12px; }
+      .lead-form label { font-size: 0.95rem; }
+      .lead-form input, .lead-form textarea { padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; }
+      .lead-form button { padding: 10px 14px; border: 0; border-radius: 6px; cursor: pointer; }
+      .lead-form .primary { background: #111827; color: #fff; }
+      .lead-form .secondary { background: #f3f4f6; color: #111827; }
+      fieldset { border: 0; margin: 0; padding: 0; }
+      [hidden] { display: none !important; }
+      .stepper { font-size: 0.9rem; color: #6b7280; margin-bottom: 8px; }
+      figure { margin: 0; }
+      img { max-width: 100%; height: auto; }
+      /* Ícones */
+      .icon { width: 1.1em; height: 1.1em; vertical-align: -0.15em; margin-right: 8px; color: #111827; }
+      .with-icons { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+      .with-icons li { display: flex; align-items: flex-start; }
+      .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+      @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } }
+    </style>
+    <!-- Sprite de ícones inline -->
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none" aria-hidden="true">
+      <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 7v5l3 3" />
+      </symbol>
+      <symbol id="i-trend-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 7l-8 8-4-4-6 6" />
+      </symbol>
+      <symbol id="i-x-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M15 9L9 15M9 9l6 6" />
+      </symbol>
+      <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="5" width="18" height="12" rx="2" />
+        <path d="M8 17l-3 3v-3" />
+      </symbol>
+      <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M21 21l-4.35-4.35" />
+      </symbol>
+      <symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="6" width="20" height="12" rx="2" />
+        <path d="M2 10h20" />
+      </symbol>
+      <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="10" width="4" height="8" />
+        <rect x="10" y="6" width="4" height="12" />
+        <rect x="17" y="13" width="4" height="5" />
+      </symbol>
+      <symbol id="i-document" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16h12a2 2 0 0 0 2-2V8z" />
+        <path d="M14 2v6h6" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6L9 17l-5-5" />
+      </symbol>
+      <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 6L6 18M6 6l12 12" />
+      </symbol>
+      <symbol id="i-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3l9 18H3z" />
+        <path d="M12 9v5" />
+        <path d="M12 18h.01" />
+      </symbol>
+    </svg>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style id="theme-overrides">
+      :root{
+        --color-primary:#1A1A1A; --color-secondary:#004AAD; --color-accent:#0098DA;
+        --bg-base:#FCFCFC; --bg-white:#FFFFFF; --bg-soft:#F6F6F6; --bg-softer:#F8F8F8;
+        --border:#E5E5E5; --border-soft:#EDEDED; --yes:#00B87B; --no:#E74C3C; --warn:#F59E0B; --wrap:1200px;
+      }
+      body{ font-family:'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", sans-serif; color:var(--color-primary); background:var(--bg-base); }
+      section{ max-width:var(--wrap); margin:0 auto; padding:96px 24px; }
+      h1{ font-weight:700; font-size: clamp(2rem, 4vw, 3rem); line-height:1.2; }
+      h2{ font-weight:700; font-size: clamp(1.5rem, 2.5vw, 2rem); line-height:1.2; }
+      a{ color:var(--color-secondary); text-decoration:none; }
+      a:hover{ color:var(--color-accent); }
+      [role="button"], .btn, button{ display:inline-flex; align-items:center; justify-content:center; gap:8px; font-weight:600; border-radius:8px; padding:12px 18px; transition: all .2s ease; }
+      .btn-primary, [role="button"].btn-primary{ background:var(--color-secondary); color:#fff; }
+      .btn-primary:hover{ background:var(--color-accent); }
+      .btn-outline{ border:1px solid var(--border); color:var(--color-primary); background:transparent; }
+      .btn-outline:hover{ border-color:var(--color-secondary); color:var(--color-secondary); }
+      #hero{ position:relative; background:var(--bg-base); }
+      .hero{ grid-template-columns: 1fr 1fr; gap: 40px; }
+      .hero::after{ content:""; position:absolute; right:-10%; top:0; width:60vw; height:80%; pointer-events:none; background: radial-gradient(closest-side, rgba(0,74,173,.10), rgba(0,74,173,0) 70%); }
+      .hero-content p.lead, #hero header p{ font-size:1.125rem; color:#4B5563; }
+      #hero [role="button"]{ border:1px solid var(--border); color:var(--color-primary); background:transparent; }
+      #hero [role="button"]:hover{ border-color:var(--color-secondary); color:var(--color-secondary); }
+      .hero-ctas{ display:flex; gap:12px; flex-wrap:wrap; }
+      .hero-form{ background:var(--bg-white); border:1px solid var(--border); border-radius:12px; padding:20px; box-shadow:0 2px 12px rgba(0,0,0,0.08); }
+      .form-brand{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+      .form-brand img{ height:28px; }
+      .badge{ display:inline-flex; align-items:center; gap:6px; background:#E9F2FF; color:var(--color-secondary); border:1px solid #D6E7FF; padding:6px 10px; border-radius:999px; font-weight:600; font-size:.8rem; }
+      .lead-form label{ font-weight:600; }
+      .lead-form input, .lead-form textarea { border-radius: 8px; }
+      .icon{ color: currentColor; }
+      .icon-badge{ display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:999px; background:#E9F2FF; margin-right:10px; }
+      #problema{ background:#fff; text-align:center; }
+      #problema ul{ margin-top:32px; display:grid; gap:16px; grid-template-columns: repeat(3, 1fr); padding:0; }
+      #problema .with-icons li{ display:block; }
+      #problema li{ list-style:none; border:1px solid var(--border); border-radius:12px; padding:20px; text-align:left; transition: box-shadow .2s ease; background:#fff; display:block; }
+      #problema li .icon-badge{ display:inline-flex; margin:0 0 10px 0; }
+      #problema li:hover{ box-shadow:0 6px 20px rgba(0,0,0,0.08); }
+      #solucao{ background:var(--bg-soft); }
+      .solucao-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:40px; align-items:center; }
+      .solucao-grid .mockup{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:10px; box-shadow:0 2px 10px rgba(0,0,0,.05); }
+      #solucao .with-icons .icon{ color:var(--color-accent); }
+      #prova-social{ background:#fff; text-align:center; }
+      .testimonials{ display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; margin-top:24px; }
+      .testimonial{ border:1px solid var(--border-soft); border-radius:12px; padding:18px; text-align:left; }
+      #prova-social figure{ border:1px solid var(--border-soft); border-radius:12px; padding:18px; max-width:780px; margin:24px auto 0; }
+      #comparativo{ background:var(--bg-softer); text-align:center; }
+      #comparativo table{ width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+      #comparativo thead th{ text-align:left; background:#F3F4F6; font-weight:600; padding:12px; }
+      #comparativo tbody td{ padding:12px; border-top:1px solid var(--border); }
+      #comparativo tbody tr:nth-child(odd){ background:#FDFDFD; }
+      #comparativo tbody tr:nth-child(even){ background:#F7F7F7; }
+      .cell-yes .icon{ color:var(--yes); }
+      .cell-no .icon{ color:var(--no); }
+      .cell-warn .icon{ color:var(--warn); }
+      #oportunidade{ background:var(--color-secondary); color:#fff; text-align:center; }
+      #oportunidade h2{ color:#fff; }
+      #oportunidade p{ color:#E5E7EB; }
+      #oportunidade .btn-contrast{ background:#fff; color:var(--color-secondary); }
+      #oportunidade [role="button"]{ background:#fff; color:var(--color-secondary); border-radius:8px; padding:12px 18px; font-weight:600; display:inline-flex; }
+      #oportunidade [role="button"]:hover{ background:#E9F2FF; }
+      #faq{ background:#fff; }
+      #faq details{ border-top:1px solid var(--border); padding:14px 0; }
+      #faq details:first-of-type{ border-top:0; }
+      #faq summary{ list-style:none; cursor:pointer; font-weight:600; position:relative; padding-right:26px; }
+      #faq summary::-webkit-details-marker{ display:none; }
+      #faq summary::after{ content:"+"; position:absolute; right:0; top:0; font-weight:700; color:#6B7280; }
+      #faq details[open] summary::after{ content:"–"; }
+      footer{ background:#1A1A1A; color:#fff; padding:40px 24px; }
+      footer p{ max-width:var(--wrap); margin:0 auto; }
+      @media (max-width: 900px){ .hero{ grid-template-columns:1fr; } #problema ul{ grid-template-columns:1fr; } .solucao-grid{ grid-template-columns:1fr; } }
+    </style>
+  </head>
+  <body>
+    <a href="#conteudo" style="position:absolute;left:-9999px;">Pular para o conteúdo</a>
+
+    <main id="conteudo">
+      <!-- 1️⃣ Hero Section -->
+      <section id="hero" class="hero" aria-labelledby="hero-title">
+        <div class="hero-content">
+        <header>
+          <h1 id="hero-title">Integre o Pagthos ao seu eGestor e tenha um crediário profissional na sua loja</h1>
+          <p>O eGestor cuida da gestão. O Pagthos cuida das cobranças. Automatize o seu crediário, reduza a inadimplência e venda fiado com segurança.</p>
+        </header>
+
+        <p>
+          <a href="#teste-gratuito" role="button" aria-label="Quero integrar agora">Quero integrar agora</a>
+        </p>
+
+        <figure>
+          <img src="assets/mockup-pagthos-egestor.png" alt="Mockup mostrando o Pagthos e o eGestor lado a lado com a frase ‘Integração completa para o seu crediário’." />
+          <figcaption>Integração completa para o seu crediário</figcaption>
+        </figure>
+        </div>
+        <aside class="hero-form" aria-label="Formulário de demonstração">
+          <form id="teste-gratuito" class="lead-form" action="#" method="post" novalidate>
+            <div class="form-brand">
+              <img src="https://pagthos.com.br/wp-content/uploads/2025/08/logo-1.png" alt="Pagthos" />
+              <span class="badge">Integração eGestor</span>
+            </div>
+            <div class="stepper" aria-live="polite"><span data-indicator>01</span> de 02</div>
+
+            <fieldset data-step="1">
+              <div class="row">
+                <label for="nome">Digite seu nome</label>
+                <input id="nome" name="nome" type="text" placeholder="Escreva seu nome completo" required />
+              </div>
+              <div class="row">
+                <label for="email">E-mail</label>
+                <input id="email" name="email" type="email" placeholder="Digite seu melhor E-mail" required />
+              </div>
+              <div class="row">
+                <label for="telefone">Telefone/ WhatsApp</label>
+                <input id="telefone" name="telefone" type="tel" inputmode="tel" placeholder="(00) 0 0000-0000" pattern="^\(\d{2}\)\s?\d\s?\d{4}-\d{4}$" required />
+              </div>
+              <div class="row">
+                <button type="button" class="primary" data-action="next">Próxima Etapa</button>
+              </div>
+            </fieldset>
+
+            <fieldset data-step="2" hidden>
+              <div class="row">
+                <label for="empresa">Nome da empresa</label>
+                <input id="empresa" name="empresa" type="text" placeholder="Escreva o nome da empresa" required />
+              </div>
+              <div class="row">
+                <label for="segmento">Segmento da empresa</label>
+                <input id="segmento" name="segmento" type="text" placeholder="Ex.: Moda, Calçados, Casa e Construção" required />
+              </div>
+              <div class="row">
+                <label for="necessidade">Qual é a principal necessidade da sua empresa hoje em relação à gestão de crediário?</label>
+                <textarea id="necessidade" name="necessidade" rows="3" placeholder="Conte em poucas palavras" required></textarea>
+              </div>
+              <div class="row" style="display:flex; gap:8px;">
+                <button type="button" class="secondary" data-action="back">Voltar</button>
+                <button type="submit" class="primary">Solicitar demonstração gratuita</button>
+              </div>
+            </fieldset>
+          </form>
+        </aside>
+      </section>
+
+      <!-- 2️⃣ O problema atual -->
+      <section id="problema" aria-labelledby="problema-title">
+        <h2 id="problema-title">O eGestor é ótimo na gestão, mas não resolve o seu crediário</h2>
+        <p>
+          Você já tem o eGestor, controla vendas e estoque — mas e o crediário?
+          Cobrar manualmente, acompanhar atrasos e fazer consultas de crédito na correria é o que mais toma tempo e gera perdas.
+        </p>
+        <ul class="with-icons">
+          <li>⏰ <strong>Cobranças manuais</strong> e esquecidas</li>
+          <li>📉 <strong>Inadimplência crescente</strong></li>
+          <li>❌ <strong>Sem análise SPC/Serasa</strong></li>
+        </ul>
+      </section>
+
+      <!-- 3️⃣ A solução -->
+      <section id="solucao" aria-labelledby="solucao-title">
+        <div class="solucao-grid">
+          <figure class="mockup">
+            <img src="assets/mockup-solucao.png" alt="Mockup do dashboard Pagthos integrado ao eGestor" />
+          </figure>
+          <div class="content">
+        <h2 id="solucao-title">Pagthos: o complemento perfeito para o seu eGestor</h2>
+        <p>
+          O Pagthos se integra ao eGestor para resolver o que falta: automação no crediário, consultas de crédito e cobrança inteligente.
+          Você continua usando o sistema que já conhece — mas com muito mais segurança e controle sobre quem paga e quem atrasa.
+        </p>
+        <ul>
+          <li>💬 <strong>Cobrança automática</strong> via WhatsApp, SMS e e-mail</li>
+          <li>🔍 <strong>Consulta SPC e Serasa</strong> integrada</li>
+          <li>💳 <strong>Emissão de boletos e carnês</strong></li>
+          <li>📊 <strong>Relatórios e alertas de inadimplência</strong></li>
+          <li>🧾 <strong>Negativação de clientes com 1 clique</strong></li>
+        </ul>
+        <p>
+          <a href="#comparativo" class="btn btn-primary" role="button" aria-label="Ver como funciona">Ver como funciona</a>
+        </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4️⃣ Prova social / autoridade -->
+      <section id="prova-social" aria-labelledby="prova-title">
+        <p class="badge">+500 lojas já utilizam o Pagthos</p>
+        <h2 id="prova-title">Mais de 500 lojas já automatizam o crediário com o Pagthos</h2>
+        <p>
+          Lojistas de todo o Brasil estão transformando o fiado em lucro, com segurança e controle.
+          Não é sobre vender mais — é sobre receber melhor.
+        </p>
+        <figure>
+          <blockquote>
+            <p>“Depois da integração com o Pagthos, reduzi em 40% a inadimplência e nunca mais precisei cobrar cliente no WhatsApp!”</p>
+          </blockquote>
+          <figcaption>Loja Estilo Fashion – Campinas/SP</figcaption>
+        </figure>
+      </section>
+
+      <!-- 5️⃣ Comparativo direto -->
+      <section id="comparativo" aria-labelledby="comparativo-title">
+        <h2 id="comparativo-title">eGestor + Pagthos: o sistema completo para quem vende a prazo</h2>
+        <table aria-label="Comparativo de funcionalidades">
+          <thead>
+            <tr>
+              <th scope="col">Função</th>
+              <th scope="col">Somente eGestor</th>
+              <th scope="col">eGestor + Pagthos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Gestão de estoque e vendas</td>
+              <td>✅</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td>Emissão de boletos e carnês</td>
+              <td>⚠️ Manual</td>
+              <td>✅ Automático</td>
+            </tr>
+            <tr>
+              <td>Consulta SPC/Serasa</td>
+              <td>❌</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td>Cobrança via WhatsApp e SMS</td>
+              <td>❌</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td>Controle de inadimplência</td>
+              <td>Parcial</td>
+              <td>✅ Completo</td>
+            </tr>
+            <tr>
+              <td>Relatórios e alertas automáticos</td>
+              <td>❌</td>
+              <td>✅</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          <a href="#teste-gratuito" role="button" aria-label="Quero integrar agora">Quero integrar agora</a>
+        </p>
+      </section>
+
+      <!-- 6️⃣ Chamada de oportunidade -->
+      <section id="oportunidade" aria-labelledby="oportunidade-title">
+        <h2 id="oportunidade-title">Tenha um sistema de crediário próprio profissional na sua loja</h2>
+        <p>
+          Venda mais e melhor, sem sofrer com o aumento da inadimplência.
+          O Pagthos é o que faltava para transformar o seu crediário em uma ferramenta lucrativa.
+        </p>
+        <p>
+          <a href="#teste-gratuito" role="button" aria-label="Quero testar a integração gratuitamente">Quero testar a integração gratuitamente</a>
+        </p>
+      </section>
+
+      <!-- 7️⃣ Dúvidas frequentes (FAQ) -->
+      <section id="faq" aria-labelledby="faq-title">
+        <h2 id="faq-title">Dúvidas sobre a integração? A gente explica:</h2>
+
+        <details>
+          <summary>O Pagthos funciona dentro do eGestor?</summary>
+          <p>Sim. O Pagthos complementa o eGestor sem substituir nenhuma função — apenas adiciona recursos de cobrança, crédito e controle de fiado.</p>
+        </details>
+
+        <details>
+          <summary>Preciso mudar meu sistema?</summary>
+          <p>Não. Basta conectar o Pagthos ao seu eGestor atual.</p>
+        </details>
+
+        <details>
+          <summary>Posso testar antes de contratar?</summary>
+          <p>Sim! Oferecemos um teste gratuito para conhecer todas as funções.</p>
+        </details>
+      </section>
+
+      <!-- 8️⃣ Encerramento + CTA final -->
+      <section id="encerramento" aria-labelledby="encerramento-title">
+        <h2 id="encerramento-title">Comece hoje a vender fiado com segurança</h2>
+        <p>
+          <a href="#teste-gratuito" role="button" aria-label="Solicitar demonstração gratuita">Solicitar demonstração gratuita</a>
+        </p>
+      </section>
+
+      <!-- Âncora de captação simples (sem CSS por enquanto) -->
+      <section id="teste-gratuito-sec" aria-labelledby="teste-title">
+        <h2 id="teste-title">Solicite uma demonstração</h2>
+        <p>Preencha seus dados para conhecer a integração Pagthos + eGestor.</p>
+        <form action="#" method="post" aria-label="Formulário de demonstração">
+          <div>
+            <label for="nome">Nome</label>
+            <input id="nome" name="nome" type="text" required />
+          </div>
+          <div>
+            <label for="loja">Empresa/Loja</label>
+            <input id="loja" name="loja" type="text" required />
+          </div>
+          <div>
+            <label for="telefone">Telefone / WhatsApp</label>
+            <input id="telefone" name="telefone" type="tel" inputmode="tel" required />
+          </div>
+          <div>
+            <label for="email">E-mail</label>
+            <input id="email" name="email" type="email" required />
+          </div>
+          <div>
+            <button type="submit">Solicitar demonstração gratuita</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <footer aria-label="Rodapé">
+      <p>Pagthos © 2025 – Sistema de crediário profissional para o varejo. Parceiro oficial do eGestor.</p>
+    </footer>
+    <script>
+      (function () {
+        var form = document.querySelector('#teste-gratuito');
+        if (!form) return;
+        var step1 = form.querySelector('[data-step="1"]');
+        var step2 = form.querySelector('[data-step="2"]');
+        var next = form.querySelector('[data-action="next"]');
+        var back = form.querySelector('[data-action="back"]');
+        var indicator = form.querySelector('[data-indicator]');
+        function goTo(n) {
+          if (n === 1) { step1.hidden = false; step2.hidden = true; if (indicator) indicator.textContent = '01'; }
+          if (n === 2) { step1.hidden = true; step2.hidden = false; if (indicator) indicator.textContent = '02'; }
+        }
+        if (next) next.addEventListener('click', function () {
+          var inputs = step1.querySelectorAll('input');
+          var valid = true;
+          for (var i = 0; i < inputs.length; i++) {
+            if (!inputs[i].reportValidity()) { valid = false; break; }
+          }
+          if (valid) goTo(2);
+        });
+        if (back) back.addEventListener('click', function () { goTo(1); });
+      })();
+      (function () {
+        function svgUse(id) {
+          var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+          svg.setAttribute('class', 'icon');
+          svg.setAttribute('aria-hidden', 'true');
+          var use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+          use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#' + id);
+          use.setAttribute('href', '#' + id);
+          svg.appendChild(use);
+          return svg;
+        }
+        function replaceListIcons(selector, iconIds) {
+          var list = document.querySelector(selector);
+          if (!list) return;
+          var items = list.querySelectorAll('li');
+          for (var i = 0; i < iconIds.length && i < items.length; i++) {
+            var li = items[i];
+            if (li.firstChild && li.firstChild.nodeType === 3) {
+              var t = li.firstChild.nodeValue || '';
+              // remove primeiro glifo (emoji) e espaços
+              var replaced = t.replace(/^\s*\S+\s*/, '');
+              if (replaced.trim().length === 0) {
+                li.removeChild(li.firstChild);
+              } else {
+                li.firstChild.nodeValue = replaced;
+              }
+            }
+            var wrap = document.createElement('span');
+            wrap.className = 'icon-badge';
+            wrap.appendChild(svgUse(iconIds[i]));
+            li.insertBefore(wrap, li.firstChild || null);
+          }
+        }
+        function setCellIcon(cell, iconId, text, srText) {
+          if (!cell) return;
+          while (cell.firstChild) cell.removeChild(cell.firstChild);
+          if (iconId === 'i-check') cell.className += ' cell-yes';
+          if (iconId === 'i-x') cell.className += ' cell-no';
+          if (iconId === 'i-warning') cell.className += ' cell-warn';
+          cell.appendChild(svgUse(iconId));
+          if (text) cell.appendChild(document.createTextNode(' ' + text));
+          if (srText) {
+            var sr = document.createElement('span');
+            sr.className = 'sr-only';
+            sr.textContent = srText;
+            cell.appendChild(sr);
+          }
+        }
+        // Problema: 3 ícones
+        replaceListIcons('#problema ul', ['i-clock','i-trend-down','i-x-circle']);
+        // Solução: 5 ícones
+        replaceListIcons('#solucao ul', ['i-chat','i-search','i-card','i-chart','i-document']);
+        // Comparativo: substituir emojis nas células por ícones
+        var tbody = document.querySelector('#comparativo tbody');
+        if (tbody) {
+          var rows = tbody.querySelectorAll('tr');
+          if (rows[0]) { setCellIcon(rows[0].children[1], 'i-check', '', 'Sim'); setCellIcon(rows[0].children[2], 'i-check', '', 'Sim'); }
+          if (rows[1]) { setCellIcon(rows[1].children[1], 'i-warning', 'Manual'); setCellIcon(rows[1].children[2], 'i-check', 'Automático'); }
+          if (rows[2]) { setCellIcon(rows[2].children[1], 'i-x', '', 'Não'); setCellIcon(rows[2].children[2], 'i-check', '', 'Sim'); }
+          if (rows[3]) { setCellIcon(rows[3].children[1], 'i-x', '', 'Não'); setCellIcon(rows[3].children[2], 'i-check', '', 'Sim'); }
+          if (rows[4]) { /* mantém 'Parcial' */ setCellIcon(rows[4].children[2], 'i-check', 'Completo'); }
+          if (rows[5]) { setCellIcon(rows[5].children[1], 'i-x', '', 'Não'); setCellIcon(rows[5].children[2], 'i-check', '', 'Sim'); }
+        }
+      })();
+    </script>
+  </body>
+  
+</html>
