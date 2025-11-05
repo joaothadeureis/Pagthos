@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Pagthos + eGestor — Crediário profissional na sua loja</title>
-    <meta name="description" content="Integre o Pagthos ao eGestor e tenha um crediário profissional: cobrança automática, consulta SPC/Serasa, boletos, carnês e controle completo de inadimplência." />
+    <title>Integre Pagthos ao eGestor | Crediário profissional com cobrança automática</title>
+    <meta name="description" content="Integre o Pagthos ao eGestor e tenha um crediário profissional: cobrança automática, consulta SPC/Serasa, boletos e carnês, relatórios e controle completo de inadimplência." />
     <style>
       /* Layout mínimo para colocar o formulário na primeira dobra (lado direito) */
       .hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: start; }
@@ -83,10 +83,13 @@
         --bg-base:#FCFCFC; --bg-white:#FFFFFF; --bg-soft:#F6F6F6; --bg-softer:#F8F8F8;
         --border:#E5E5E5; --border-soft:#EDEDED; --yes:#00B87B; --no:#E74C3C; --warn:#F59E0B; --wrap:1200px;
       }
+      #teste-gratuito-sec, footer form { display:none !important; }
       body{ font-family:'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", sans-serif; color:var(--color-primary); background:var(--bg-base); }
       section{ max-width:var(--wrap); margin:0 auto; padding:96px 24px; }
-      h1{ font-weight:700; font-size: clamp(2rem, 4vw, 3rem); line-height:1.2; }
-      h2{ font-weight:700; font-size: clamp(1.5rem, 2.5vw, 2rem); line-height:1.2; }
+      h1{ font-weight:700; font-size:44px; line-height:1.1; }
+      h2{ font-weight:700; font-size:30px; line-height:1.2; }
+      .lead{ font-size:18px; line-height:28px; color:#4B5563; }
+      .with-icons li{ font-size:16px; line-height:26px; }
       a{ color:var(--color-secondary); text-decoration:none; }
       a:hover{ color:var(--color-accent); }
       [role="button"], .btn, button{ display:inline-flex; align-items:center; justify-content:center; gap:8px; font-weight:600; border-radius:8px; padding:12px 18px; transition: all .2s ease; }
@@ -96,7 +99,8 @@
       .btn-outline:hover{ border-color:var(--color-secondary); color:var(--color-secondary); }
       #hero{ position:relative; background:var(--bg-base); }
       .hero{ grid-template-columns: 1fr 1fr; gap: 40px; }
-      .hero::after{ content:""; position:absolute; right:-10%; top:0; width:60vw; height:80%; pointer-events:none; background: radial-gradient(closest-side, rgba(0,74,173,.10), rgba(0,74,173,0) 70%); }
+      #hero::after{ content:""; position:absolute; inset:auto -10% -20% auto; width:60vw; height:60vh; background: radial-gradient(55% 55% at 50% 50%, rgba(0,74,173,.10) 0%, rgba(0,74,173,0) 70%); pointer-events:none; z-index:0; }
+      #hero > *{ position:relative; z-index:1; }
       .hero-content p.lead, #hero header p{ font-size:1.125rem; color:#4B5563; }
       #hero [role="button"]{ border:1px solid var(--border); color:var(--color-primary); background:transparent; }
       #hero [role="button"]:hover{ border-color:var(--color-secondary); color:var(--color-secondary); }
@@ -116,7 +120,7 @@
       #problema li .icon-badge{ display:inline-flex; margin:0 0 10px 0; }
       #problema li:hover{ box-shadow:0 6px 20px rgba(0,0,0,0.08); }
       #solucao{ background:var(--bg-soft); }
-      .solucao-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:40px; align-items:center; }
+      .solucao-grid{ display:grid; grid-template-columns: 1.1fr .9fr; gap:48px; align-items:center; }
       .solucao-grid .mockup{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:10px; box-shadow:0 2px 10px rgba(0,0,0,.05); }
       #solucao .with-icons .icon{ color:var(--color-accent); }
       #prova-social{ background:#fff; text-align:center; }
@@ -163,16 +167,16 @@
         </header>
 
         <p>
-          <a href="#teste-gratuito" role="button" aria-label="Quero integrar agora">Quero integrar agora</a>
+          <a href="#lead-form" role="button" aria-label="Quero integrar agora" data-gtm="cta_hero">Quero integrar agora</a>
         </p>
 
         <figure>
-          <img src="assets/mockup-pagthos-egestor.png" alt="Mockup mostrando o Pagthos e o eGestor lado a lado com a frase ‘Integração completa para o seu crediário’." />
+          <img src="/assets/mockup-pagthos-egestor.webp" width="1600" height="1000" alt="Integração Pagthos + eGestor em funcionamento" />
           <figcaption>Integração completa para o seu crediário</figcaption>
         </figure>
         </div>
-        <aside class="hero-form" aria-label="Formulário de demonstração">
-          <form id="teste-gratuito" class="lead-form" action="#" method="post" novalidate>
+        <aside class="hero-form form-card" aria-label="Formulário de demonstração">
+          <form id="lead-form" class="lead-form" action="#" method="post" novalidate>
             <div class="form-brand">
               <img src="https://pagthos.com.br/wp-content/uploads/2025/08/logo-1.png" alt="Pagthos" />
               <span class="badge">Integração eGestor</span>
@@ -237,7 +241,7 @@
       <section id="solucao" aria-labelledby="solucao-title">
         <div class="solucao-grid">
           <figure class="mockup">
-            <img src="assets/mockup-solucao.png" alt="Mockup do dashboard Pagthos integrado ao eGestor" />
+            <img src="/assets/mockup-pagthos-egestor.webp" width="1600" height="1000" alt="Integração Pagthos + eGestor em funcionamento"  loading="lazy" decoding="async" />
           </figure>
           <div class="content">
         <h2 id="solucao-title">Pagthos: o complemento perfeito para o seu eGestor</h2>
@@ -321,7 +325,7 @@
         </table>
 
         <p>
-          <a href="#teste-gratuito" role="button" aria-label="Quero integrar agora">Quero integrar agora</a>
+          <a href="#lead-form" role="button" aria-label="Quero integrar agora" data-gtm="cta_comp">Quero integrar agora</a>
         </p>
       </section>
 
@@ -333,7 +337,7 @@
           O Pagthos é o que faltava para transformar o seu crediário em uma ferramenta lucrativa.
         </p>
         <p>
-          <a href="#teste-gratuito" role="button" aria-label="Quero testar a integração gratuitamente">Quero testar a integração gratuitamente</a>
+          <a href="#lead-form" role="button" aria-label="Quero testar a integração gratuitamente">Quero testar a integração gratuitamente</a>
         </p>
       </section>
 
@@ -361,7 +365,7 @@
       <section id="encerramento" aria-labelledby="encerramento-title">
         <h2 id="encerramento-title">Comece hoje a vender fiado com segurança</h2>
         <p>
-          <a href="#teste-gratuito" role="button" aria-label="Solicitar demonstração gratuita">Solicitar demonstração gratuita</a>
+          <a href="#lead-form" role="button" aria-label="Solicitar demonstração gratuita">Solicitar demonstração gratuita</a>
         </p>
       </section>
 
@@ -398,7 +402,7 @@
     </footer>
     <script>
       (function () {
-        var form = document.querySelector('#teste-gratuito');
+        var form = document.querySelector('#lead-form');
         if (!form) return;
         var step1 = form.querySelector('[data-step="1"]');
         var step2 = form.querySelector('[data-step="2"]');
@@ -475,12 +479,12 @@
         var tbody = document.querySelector('#comparativo tbody');
         if (tbody) {
           var rows = tbody.querySelectorAll('tr');
-          if (rows[0]) { setCellIcon(rows[0].children[1], 'i-check', '', 'Sim'); setCellIcon(rows[0].children[2], 'i-check', '', 'Sim'); }
+          if (rows[0]) { setCellIcon(rows[0].children[1], 'i-check', 'Sim', 'Sim'); setCellIcon(rows[0].children[2], 'i-check', 'Sim', 'Sim'); }
           if (rows[1]) { setCellIcon(rows[1].children[1], 'i-warning', 'Manual'); setCellIcon(rows[1].children[2], 'i-check', 'Automático'); }
-          if (rows[2]) { setCellIcon(rows[2].children[1], 'i-x', '', 'Não'); setCellIcon(rows[2].children[2], 'i-check', '', 'Sim'); }
-          if (rows[3]) { setCellIcon(rows[3].children[1], 'i-x', '', 'Não'); setCellIcon(rows[3].children[2], 'i-check', '', 'Sim'); }
+          if (rows[2]) { setCellIcon(rows[2].children[1], 'i-x', 'Não', 'Não'); setCellIcon(rows[2].children[2], 'i-check', 'Sim', 'Sim'); }
+          if (rows[3]) { setCellIcon(rows[3].children[1], 'i-x', 'Não', 'Não'); setCellIcon(rows[3].children[2], 'i-check', 'Sim', 'Sim'); }
           if (rows[4]) { /* mantém 'Parcial' */ setCellIcon(rows[4].children[2], 'i-check', 'Completo'); }
-          if (rows[5]) { setCellIcon(rows[5].children[1], 'i-x', '', 'Não'); setCellIcon(rows[5].children[2], 'i-check', '', 'Sim'); }
+          if (rows[5]) { setCellIcon(rows[5].children[1], 'i-x', 'Não', 'Não'); setCellIcon(rows[5].children[2], 'i-check', 'Sim', 'Sim'); }
         }
       })();
     </script>

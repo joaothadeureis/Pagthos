@@ -1,0 +1,1 @@
+          <img src="/assets/mockup-pagthos-egestor.webp" alt="Mockup mostrando o Pagthos e o eGestor lado a lado com a frase ‘Integração completa para o seu crediário’." />
