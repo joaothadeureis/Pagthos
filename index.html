@@ -74,7 +74,7 @@
         <path d="M12 18h.01" />
       </symbol>
     </svg>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style id="theme-overrides">
@@ -94,7 +94,7 @@
       a:hover{ color:var(--color-accent); }
       [role="button"], .btn, button{ display:inline-flex; align-items:center; justify-content:center; gap:8px; font-weight:600; border-radius:8px; padding:12px 18px; transition: all .2s ease; }
       .btn-primary, [role="button"].btn-primary{ background:var(--color-secondary); color:#fff; }
-      .btn-primary:hover{ background:var(--color-accent); }
+      .btn-primary:hover{ background:#0360d3; }
       .btn-outline{ border:1px solid var(--border); color:var(--color-primary); background:transparent; }
       .btn-outline:hover{ border-color:var(--color-secondary); color:var(--color-secondary); }
       #hero{ position:relative; background:var(--bg-base); }
@@ -113,6 +113,11 @@
       .lead-form input, .lead-form textarea { border-radius: 8px; }
       .icon{ color: currentColor; }
       .icon-badge{ display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:999px; background:#E9F2FF; margin-right:10px; }
+      .visually-hidden{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+      .trust-row{display:flex;align-items:center;gap:16px;margin-top:12px}
+      .trust-badge{display:inline-block;padding:6px 12px;border-radius:999px;background:#E9F2FF;color:#004AAD;font-weight:600;font-size:12px}
+      .logo-strip{display:flex;gap:12px;list-style:none;margin:0;padding:0}
+      .logo-strip .logo{width:68px;height:28px;opacity:.4;background:#ECEFF4;border-radius:6px}
       #problema{ background:#fff; text-align:center; }
       #problema ul{ margin-top:32px; display:grid; gap:16px; grid-template-columns: repeat(3, 1fr); padding:0; }
       #problema .with-icons li{ display:block; }
@@ -136,6 +141,15 @@
       .cell-yes .icon{ color:var(--yes); }
       .cell-no .icon{ color:var(--no); }
       .cell-warn .icon{ color:var(--warn); }
+      /* Tabela responsiva (stack em mobile) */
+      @media(max-width:768px){
+        #comparativo.comp thead{display:none}
+        #comparativo.comp table, #comparativo.comp tbody, #comparativo.comp tr, #comparativo.comp td{display:block;width:100%}
+        #comparativo.comp tr{margin-bottom:16px;background:#fff}
+        #comparativo.comp td{border-bottom:1px solid #eee}
+      }
+      /* Select styling */
+      #lead-form select{width:100%;padding:12px 14px;border:1px solid #E5E7EB;border-radius:10px;background:#fff}
       #oportunidade{ background:var(--color-secondary); color:#fff; text-align:center; }
       #oportunidade h2{ color:#fff; }
       #oportunidade p{ color:#E5E7EB; }
@@ -167,8 +181,16 @@
         </header>
 
         <p>
-          <a href="#lead-form" role="button" aria-label="Quero integrar agora" data-gtm="cta_hero">Quero integrar agora</a>
+          <a href="#lead-form" class="btn btn-primary" role="button" aria-label="Quero integrar agora" data-gtm="cta_hero">Quero integrar agora</a>
         </p>
+        <div class="trust-row">
+          <span class="trust-badge">500+ lojas integradas</span>
+          <ul class="logo-strip" aria-label="Lojas que usam Pagthos">
+            <li class="logo logo--placeholder" aria-hidden="true"></li>
+            <li class="logo logo--placeholder" aria-hidden="true"></li>
+            <li class="logo logo--placeholder" aria-hidden="true"></li>
+          </ul>
+        </div>
 
         <figure>
           <img src="/assets/mockup-pagthos-egestor.webp" width="1600" height="1000" alt="Integração Pagthos + eGestor em funcionamento" />
@@ -194,7 +216,7 @@
               </div>
               <div class="row">
                 <label for="telefone">Telefone/ WhatsApp</label>
-                <input id="telefone" name="telefone" type="tel" inputmode="tel" placeholder="(00) 0 0000-0000" pattern="^\(\d{2}\)\s?\d\s?\d{4}-\d{4}$" required />
+                <input id="telefone" name="telefone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(00) 0 0000-0000" pattern="^\(\d{2}\)\s?(?:9\s?)?\d{4}-\d{4}$" required />
               </div>
               <div class="row">
                 <button type="button" class="primary" data-action="next">Próxima Etapa</button>
@@ -207,8 +229,15 @@
                 <input id="empresa" name="empresa" type="text" placeholder="Escreva o nome da empresa" required />
               </div>
               <div class="row">
-                <label for="segmento">Segmento da empresa</label>
-                <input id="segmento" name="segmento" type="text" placeholder="Ex.: Moda, Calçados, Casa e Construção" required />
+                <label for="segmento" class="visually-hidden">Segmento da empresa</label>
+                <select id="segmento" name="segmento" required>
+                  <option value="" selected disabled>Segmento da empresa</option>
+                  <option>Moda</option>
+                  <option>Calçados</option>
+                  <option>Móveis</option>
+                  <option>Serviços</option>
+                  <option>Outros</option>
+                </select>
               </div>
               <div class="row">
                 <label for="necessidade">Qual é a principal necessidade da sua empresa hoje em relação à gestão de crediário?</label>
@@ -280,7 +309,7 @@
       </section>
 
       <!-- 5️⃣ Comparativo direto -->
-      <section id="comparativo" aria-labelledby="comparativo-title">
+      <section id="comparativo" class="comp" aria-labelledby="comparativo-title">
         <h2 id="comparativo-title">eGestor + Pagthos: o sistema completo para quem vende a prazo</h2>
         <table aria-label="Comparativo de funcionalidades">
           <thead>
@@ -325,7 +354,7 @@
         </table>
 
         <p>
-          <a href="#lead-form" role="button" aria-label="Quero integrar agora" data-gtm="cta_comp">Quero integrar agora</a>
+          <a href="#lead-form" class="btn btn-primary" role="button" aria-label="Quero integrar agora" data-gtm="cta_comparativo">Quero integrar agora</a>
         </p>
       </section>
 
@@ -337,7 +366,7 @@
           O Pagthos é o que faltava para transformar o seu crediário em uma ferramenta lucrativa.
         </p>
         <p>
-          <a href="#lead-form" role="button" aria-label="Quero testar a integração gratuitamente">Quero testar a integração gratuitamente</a>
+          <a href="#lead-form" role="button" aria-label="Quero testar a integração gratuitamente" data-gtm="cta_oportunidade">Quero testar a integração gratuitamente</a>
         </p>
       </section>
 
@@ -346,19 +375,25 @@
         <h2 id="faq-title">Dúvidas sobre a integração? A gente explica:</h2>
 
         <details>
-          <summary>O Pagthos funciona dentro do eGestor?</summary>
-          <p>Sim. O Pagthos complementa o eGestor sem substituir nenhuma função — apenas adiciona recursos de cobrança, crédito e controle de fiado.</p>
-        </details>
+  <summary aria-controls="faq1" aria-expanded="false">O Pagthos funciona dentro do eGestor?</summary>
+  <div id="faq1" role="region" aria-label="Resposta: funciona no eGestor">
+    <p>Sim. O Pagthos complementa o eGestor sem substituir nenhuma função — apenas adiciona recursos de cobrança, crédito e controle de fiado.</p>
+  </div>
+</details>
 
         <details>
-          <summary>Preciso mudar meu sistema?</summary>
-          <p>Não. Basta conectar o Pagthos ao seu eGestor atual.</p>
-        </details>
+  <summary aria-controls="faq2" aria-expanded="false">Preciso mudar meu sistema?</summary>
+  <div id="faq2" role="region" aria-label="Resposta: precisa mudar o sistema?">
+    <p>Não. Basta conectar o Pagthos ao seu eGestor atual.</p>
+  </div>
+</details>
 
         <details>
-          <summary>Posso testar antes de contratar?</summary>
-          <p>Sim! Oferecemos um teste gratuito para conhecer todas as funções.</p>
-        </details>
+  <summary aria-controls="faq3" aria-expanded="false">Posso testar antes de contratar?</summary>
+  <div id="faq3" role="region" aria-label="Resposta: teste antes de contratar">
+    <p>Sim! Oferecemos um teste gratuito para conhecer todas as funções.</p>
+  </div>
+</details>
       </section>
 
       <!-- 8️⃣ Encerramento + CTA final -->
@@ -422,6 +457,22 @@
           if (valid) goTo(2);
         });
         if (back) back.addEventListener('click', function () { goTo(1); });
+        // Máscara simples para Telefone/WhatsApp
+        var tel = form.querySelector('#telefone');
+        if (tel) {
+          tel.addEventListener('input', function(){
+            var d = tel.value.replace(/\D/g,'').slice(0,11);
+            tel.dataset.raw = d;
+          });
+          tel.addEventListener('blur', function(){
+            var d = (tel.dataset.raw || tel.value.replace(/\D/g,'')).slice(0,11);
+            if (d.length === 11) { // celular
+              tel.value = '('+d.slice(0,2)+') '+d.slice(2,3)+' '+d.slice(3,7)+'-'+d.slice(7,11);
+            } else if (d.length === 10) { // fixo
+              tel.value = '('+d.slice(0,2)+') '+d.slice(2,6)+'-'+d.slice(6,10);
+            }
+          });
+        }
       })();
       (function () {
         function svgUse(id) {
@@ -486,8 +537,38 @@
           if (rows[4]) { /* mantém 'Parcial' */ setCellIcon(rows[4].children[2], 'i-check', 'Completo'); }
           if (rows[5]) { setCellIcon(rows[5].children[1], 'i-x', 'Não', 'Não'); setCellIcon(rows[5].children[2], 'i-check', 'Sim', 'Sim'); }
         }
+        // Smooth scroll e foco no form
+        document.querySelectorAll('a[href="#lead-form"]').forEach(function(a){
+          a.addEventListener('click', function(e){
+            var form = document.getElementById('lead-form');
+            if(!form) return;
+            e.preventDefault();
+            form.scrollIntoView({behavior:'smooth', block:'center'});
+            setTimeout(function(){
+              var first = form.querySelector('input,select,textarea,button');
+              if (first && first.focus) first.focus();
+            }, 500);
+          });
+        });
+        // FAQ a11y: aria-expanded
+        document.querySelectorAll('details > summary').forEach(function(s){
+          s.parentElement.addEventListener('toggle', function(e){
+            s.setAttribute('aria-expanded', e.target.open ? 'true' : 'false');
+          });
+        });
       })();
     </script>
   </body>
+  <script type="application/ld+json">
+  {
+   "@context":"https://schema.org",
+   "@type":"FAQPage",
+   "mainEntity":[
+    {"@type":"Question","name":"Preciso trocar o eGestor?","acceptedAnswer":{"@type":"Answer","text":"Não. O Pagthos complementa o eGestor com cobrança automática, análise de crédito e controle de inadimplência."}},
+    {"@type":"Question","name":"Posso testar antes de contratar?","acceptedAnswer":{"@type":"Answer","text":"Sim. Oferecemos demonstração e teste gratuito para você validar a integração no seu fluxo."}},
+    {"@type":"Question","name":"A cobrança é feita por WhatsApp?","acceptedAnswer":{"@type":"Answer","text":"Sim. Também por SMS e e-mail, com lembretes automáticos e relatórios."}}
+   ]
+  }
+  </script>
   
 </html>

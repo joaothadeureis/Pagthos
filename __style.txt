@@ -1,0 +1,76 @@
+    <style id="theme-overrides">
+      :root{
+        --color-primary:#1A1A1A; --color-secondary:#004AAD; --color-accent:#0098DA;
+        --bg-base:#FCFCFC; --bg-white:#FFFFFF; --bg-soft:#F6F6F6; --bg-softer:#F8F8F8;
+        --border:#E5E5E5; --border-soft:#EDEDED; --yes:#00B87B; --no:#E74C3C; --warn:#F59E0B; --wrap:1200px;
+      }
+      #teste-gratuito-sec, footer form { display:none !important; }
+      body{ font-family:'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", sans-serif; color:var(--color-primary); background:var(--bg-base); }
+      section{ max-width:var(--wrap); margin:0 auto; padding:96px 24px; }
+      h1{ font-weight:700; font-size:44px; line-height:1.1; }
+      h2{ font-weight:700; font-size:30px; line-height:1.2; }
+      .lead{ font-size:18px; line-height:28px; color:#4B5563; }
+      .with-icons li{ font-size:16px; line-height:26px; }
+      a{ color:var(--color-secondary); text-decoration:none; }
+      a:hover{ color:var(--color-accent); }
+      [role="button"], .btn, button{ display:inline-flex; align-items:center; justify-content:center; gap:8px; font-weight:600; border-radius:8px; padding:12px 18px; transition: all .2s ease; }
+      .btn-primary, [role="button"].btn-primary{ background:var(--color-secondary); color:#fff; }
+      .btn-primary:hover{ background:var(--color-accent); }
+      .btn-outline{ border:1px solid var(--border); color:var(--color-primary); background:transparent; }
+      .btn-outline:hover{ border-color:var(--color-secondary); color:var(--color-secondary); }
+      #hero{ position:relative; background:var(--bg-base); }
+      .hero{ grid-template-columns: 1fr 1fr; gap: 40px; }
+      #hero::after{ content:""; position:absolute; inset:auto -10% -20% auto; width:60vw; height:60vh; background: radial-gradient(55% 55% at 50% 50%, rgba(0,74,173,.10) 0%, rgba(0,74,173,0) 70%); pointer-events:none; z-index:0; }
+      #hero > *{ position:relative; z-index:1; }
+      .hero-content p.lead, #hero header p{ font-size:1.125rem; color:#4B5563; }
+      #hero [role="button"]{ border:1px solid var(--border); color:var(--color-primary); background:transparent; }
+      #hero [role="button"]:hover{ border-color:var(--color-secondary); color:var(--color-secondary); }
+      .hero-ctas{ display:flex; gap:12px; flex-wrap:wrap; }
+      .hero-form{ background:var(--bg-white); border:1px solid var(--border); border-radius:12px; padding:20px; box-shadow:0 2px 12px rgba(0,0,0,0.08); }
+      .form-brand{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+      .form-brand img{ height:28px; }
+      .badge{ display:inline-flex; align-items:center; gap:6px; background:#E9F2FF; color:var(--color-secondary); border:1px solid #D6E7FF; padding:6px 10px; border-radius:999px; font-weight:600; font-size:.8rem; }
+      .lead-form label{ font-weight:600; }
+      .lead-form input, .lead-form textarea { border-radius: 8px; }
+      .icon{ color: currentColor; }
+      .icon-badge{ display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:999px; background:#E9F2FF; margin-right:10px; }
+      #problema{ background:#fff; text-align:center; }
+      #problema ul{ margin-top:32px; display:grid; gap:16px; grid-template-columns: repeat(3, 1fr); padding:0; }
+      #problema .with-icons li{ display:block; }
+      #problema li{ list-style:none; border:1px solid var(--border); border-radius:12px; padding:20px; text-align:left; transition: box-shadow .2s ease; background:#fff; display:block; }
+      #problema li .icon-badge{ display:inline-flex; margin:0 0 10px 0; }
+      #problema li:hover{ box-shadow:0 6px 20px rgba(0,0,0,0.08); }
+      #solucao{ background:var(--bg-soft); }
+      .solucao-grid{ display:grid; grid-template-columns: 1.1fr .9fr; gap:48px; align-items:center; }
+      .solucao-grid .mockup{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:10px; box-shadow:0 2px 10px rgba(0,0,0,.05); }
+      #solucao .with-icons .icon{ color:var(--color-accent); }
+      #prova-social{ background:#fff; text-align:center; }
+      .testimonials{ display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; margin-top:24px; }
+      .testimonial{ border:1px solid var(--border-soft); border-radius:12px; padding:18px; text-align:left; }
+      #prova-social figure{ border:1px solid var(--border-soft); border-radius:12px; padding:18px; max-width:780px; margin:24px auto 0; }
+      #comparativo{ background:var(--bg-softer); text-align:center; }
+      #comparativo table{ width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+      #comparativo thead th{ text-align:left; background:#F3F4F6; font-weight:600; padding:12px; }
+      #comparativo tbody td{ padding:12px; border-top:1px solid var(--border); }
+      #comparativo tbody tr:nth-child(odd){ background:#FDFDFD; }
+      #comparativo tbody tr:nth-child(even){ background:#F7F7F7; }
+      .cell-yes .icon{ color:var(--yes); }
+      .cell-no .icon{ color:var(--no); }
+      .cell-warn .icon{ color:var(--warn); }
+      #oportunidade{ background:var(--color-secondary); color:#fff; text-align:center; }
+      #oportunidade h2{ color:#fff; }
+      #oportunidade p{ color:#E5E7EB; }
+      #oportunidade .btn-contrast{ background:#fff; color:var(--color-secondary); }
+      #oportunidade [role="button"]{ background:#fff; color:var(--color-secondary); border-radius:8px; padding:12px 18px; font-weight:600; display:inline-flex; }
+      #oportunidade [role="button"]:hover{ background:#E9F2FF; }
+      #faq{ background:#fff; }
+      #faq details{ border-top:1px solid var(--border); padding:14px 0; }
+      #faq details:first-of-type{ border-top:0; }
+      #faq summary{ list-style:none; cursor:pointer; font-weight:600; position:relative; padding-right:26px; }
+      #faq summary::-webkit-details-marker{ display:none; }
+      #faq summary::after{ content:"+"; position:absolute; right:0; top:0; font-weight:700; color:#6B7280; }
+      #faq details[open] summary::after{ content:"–"; }
+      footer{ background:#1A1A1A; color:#fff; padding:40px 24px; }
+      footer p{ max-width:var(--wrap); margin:0 auto; }
+      @media (max-width: 900px){ .hero{ grid-template-columns:1fr; } #problema ul{ grid-template-columns:1fr; } .solucao-grid{ grid-template-columns:1fr; } }
+    </style>
